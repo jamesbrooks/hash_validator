@@ -22,7 +22,8 @@ Or install it yourself as:
     $ gem install hash_validator
 
 ## Example
-````
+
+```ruby
 # Validations hash
 validations = {
   user: {
@@ -56,7 +57,7 @@ validator.errors
               :likes => "array required"
       }
     }
-````
+```
 
 ## Usage
 
