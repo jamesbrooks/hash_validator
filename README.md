@@ -69,6 +69,8 @@ Define a validation hash which will be used to validate. This has can be nested 
 * `time`
 * hashes are validates by nesting validations, or if just the presence of a hash is required `{}` can be used.
 
+Example use-cases include Ruby APIs (I'm currently using it in a Rails API that I'm building for better error responses to developers).
+
 ## Contributing
 
 1. Fork it
