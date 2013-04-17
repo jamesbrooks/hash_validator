@@ -17,7 +17,7 @@ class HashValidator::Validator::SimpleTypeValidator < HashValidator::Validator::
 
   def validate(key, value, validations, errors)
     unless value.is_a?(klass)
-      errors[key] = "should be #{name}"
+      errors[key] = presence_error_message
     end
   end
 end

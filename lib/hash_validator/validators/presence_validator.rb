@@ -13,7 +13,7 @@ class HashValidator::Validator::PresenceValidator < HashValidator::Validator::Ba
 
   def validate(key, value, validations, errors)
     unless value
-      errors[key] = "is required"
+      errors[key] = presence_error_message
     end
   end
 end

@@ -4,7 +4,9 @@ describe HashValidator do
   describe 'individual type validations' do
     it 'should validate hash' do
       validate({ v: {} }, { v: {} }).valid?.should be_true
+
       validate({ v: '' }, { v: {} }).valid?.should be_false
+      validate({ v: '' }, { v: {} }).errors.should eq({ v: 'hash required' })
     end
 
     it 'should validate presence' do
@@ -12,13 +14,20 @@ describe HashValidator do
       validate({ v: 1234   }, { v: 'required' }).valid?.should be_true
 
       validate({ v: nil    }, { v: 'required' }).valid?.should be_false
+      validate({ v: nil    }, { v: 'required' }).errors.should eq({ v: 'is required' })
+
       validate({ x: 'test' }, { v: 'required' }).valid?.should be_false
+      validate({ x: 'test' }, { v: 'required' }).errors.should eq({ v: 'is required' })
+
       validate({ x: 1234   }, { v: 'required' }).valid?.should be_false
+      validate({ x: 1234   }, { v: 'required' }).errors.should eq({ v: 'is required' })
     end
 
     it 'should validate string' do
       validate({ v: 'test' }, { v: 'string' }).valid?.should be_true
+
       validate({ v: 123456 }, { v: 'string' }).valid?.should be_false
+      validate({ v: 123456 }, { v: 'string' }).errors.should eq({ v: 'string required' })
     end
 
     it 'should validate numeric' do
@@ -123,7 +132,7 @@ describe HashValidator do
       it 'should not validate a simple hash 2' do
         v = validate(invalid_simple_hash, validations)
         v.valid?.should be_false
-        v.errors.should eq({ bar: 'should be string' })
+        v.errors.should eq({ bar: 'string required' })
       end
 
       it 'should validate a complex hash' do
@@ -135,7 +144,7 @@ describe HashValidator do
       it 'should not validate a complex hash 2' do
         v = validate(invalid_complex_hash, validations)
         v.valid?.should be_false
-        v.errors.should eq({ bar: 'should be string' })
+        v.errors.should eq({ bar: 'string required' })
       end
     end
 
@@ -151,7 +160,7 @@ describe HashValidator do
       it 'should not validate a complex hash 2' do
         v = validate(invalid_complex_hash, validations)
         v.valid?.should be_false
-        v.errors.should eq({ bar: 'should be string', user: { age: 'is required', likes: 'should be array' } })
+        v.errors.should eq({ bar: 'string required', user: { age: 'is required', likes: 'array required' } })
       end
     end
   end

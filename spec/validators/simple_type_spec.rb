@@ -28,7 +28,7 @@ describe HashValidator::Validator::Base do
       validator.validate(:key, "foo bar", {}, errors)
 
       errors.should_not be_empty
-      errors.should eq({ key: 'should be my_class' })
+      errors.should eq({ key: 'my_class required' })
     end
   end
 end
