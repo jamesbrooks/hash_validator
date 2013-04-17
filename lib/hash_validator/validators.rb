@@ -3,6 +3,14 @@ module HashValidator
 
 
   def self.append_validator(validator)
+    unless validator.is_a?(HashValidator::Validator::Base)
+      raise StandardError.new('validators need to inherit from HashValidator::Validator::Base')
+    end
+
+    if @@validators.detect { |v| v.name == validator.name }
+      raise StandardError.new('validators need to have unique names')
+    end
+
     @@validators << validator
   end
 

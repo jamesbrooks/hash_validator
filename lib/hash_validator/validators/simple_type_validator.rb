@@ -1,18 +1,10 @@
 class HashValidator::Validator::SimpleTypeValidator < HashValidator::Validator::Base
-  attr_accessor :name, :klass
+  attr_accessor :klass
 
 
   def initialize(name, klass)
-    self.name  = name
+    super(name)
     self.klass = klass
-  end
-
-  def presence_error_message
-    "#{name} required"
-  end
-
-  def should_validate?(rhs)
-    rhs == self.name
   end
 
   def validate(key, value, validations, errors)

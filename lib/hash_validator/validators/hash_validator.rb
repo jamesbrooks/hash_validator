@@ -1,10 +1,6 @@
 class HashValidator::Validator::HashValidator < HashValidator::Validator::Base
-  def name
-    'hash'
-  end
-
-  def presence_error_message
-    "#{name} required"
+  def initialize
+    super('hash')
   end
 
   def should_validate?(rhs)
