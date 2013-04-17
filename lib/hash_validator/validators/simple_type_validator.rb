@@ -7,6 +7,10 @@ class HashValidator::Validator::SimpleTypeValidator < HashValidator::Validator::
     self.klass = klass
   end
 
+  def presence_error_message
+    "#{name} required"
+  end
+
   def should_validate?(rhs)
     rhs == self.name
   end

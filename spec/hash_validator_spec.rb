@@ -7,6 +7,15 @@ describe HashValidator do
       validate({ v: '' }, { v: {} }).valid?.should be_false
     end
 
+    it 'should validate presence' do
+      validate({ v: 'test' }, { v: 'required' }).valid?.should be_true
+      validate({ v: 1234   }, { v: 'required' }).valid?.should be_true
+
+      validate({ v: nil    }, { v: 'required' }).valid?.should be_false
+      validate({ x: 'test' }, { v: 'required' }).valid?.should be_false
+      validate({ x: 1234   }, { v: 'required' }).valid?.should be_false
+    end
+
     it 'should validate string' do
       validate({ v: 'test' }, { v: 'string' }).valid?.should be_true
       validate({ v: 123456 }, { v: 'string' }).valid?.should be_false
@@ -131,7 +140,7 @@ describe HashValidator do
     end
 
     describe 'nested validations' do
-      let(:validations) {{ foo: 'numeric', bar: 'string', user: { first_name: 'string', age: 'numeric', likes: 'array' } }}
+      let(:validations) {{ foo: 'numeric', bar: 'string', user: { first_name: 'string', age: 'required', likes: 'array' } }}
 
       it 'should validate a complex hash' do
         v = validate(complex_hash, validations)
@@ -142,7 +151,7 @@ describe HashValidator do
       it 'should not validate a complex hash 2' do
         v = validate(invalid_complex_hash, validations)
         v.valid?.should be_false
-        v.errors.should eq({ bar: 'should be string', user: { age: 'numeric required', likes: 'should be array' } })
+        v.errors.should eq({ bar: 'should be string', user: { age: 'is required', likes: 'should be array' } })
       end
     end
   end

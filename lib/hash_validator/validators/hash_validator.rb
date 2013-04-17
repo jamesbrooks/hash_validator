@@ -3,6 +3,10 @@ class HashValidator::Validator::HashValidator < HashValidator::Validator::Base
     'hash'
   end
 
+  def presence_error_message
+    "#{name} required"
+  end
+
   def should_validate?(rhs)
     rhs.is_a?(Hash)
   end
@@ -22,7 +26,7 @@ class HashValidator::Validator::HashValidator < HashValidator::Validator::Base
 
       # Key presence
       unless value[v_key]
-        errors[v_key] = "#{validator.name} required"
+        errors[v_key] = validator.presence_error_message
         next
       end
 
