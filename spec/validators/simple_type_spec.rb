@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe HashValidator::Validator::Base do
+describe HashValidator::Validator::SimpleTypeValidator do
   let(:my_class)  { Class.new }
   let(:validator) { HashValidator::Validator::SimpleTypeValidator.new('my_class', my_class) }
   let(:errors)    { Hash.new }
