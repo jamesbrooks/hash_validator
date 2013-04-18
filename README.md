@@ -73,6 +73,33 @@ Define a validation hash which will be used to validate. This has can be nested 
 
 Example use-cases include Ruby APIs (I'm currently using it in a Rails API that I'm building for better error responses to developers).
 
+## Custom validations
+
+Allows custom defined validations (must inherit from `HashValidator::Validator::Base`). Example:
+
+```ruby
+# Define our custom validator
+class HashValidator::Validator::OddValidator < HashValidator::Validator::Base
+  def initialize
+    super('odd')  # The name of the validator
+  end
+
+  def validate(key, value, validations, errors)
+    unless value.is_a?(Integer) && value.odd?
+      errors[key] = presence_error_message
+    end
+  end
+end
+
+# Add the validator
+HashValidator.append_validator(HashValidator::Validator::OddValidator.new)
+
+# Now the validator can be used! e.g.
+validator = HashValidator.validate({ age: 27 }, { age: 'odd' })
+validator.valid?  # => true
+validator.errors  # => {}
+```
+
 ## Contributing
 
 1. Fork it
