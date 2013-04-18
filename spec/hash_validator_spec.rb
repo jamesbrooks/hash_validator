@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe HashValidator do
   describe 'Adding validators' do
-    let(:new_validator1) { HashValidator::Validator::SimpleTypeValidator.new('my_type1', String) }
-    let(:new_validator2) { HashValidator::Validator::SimpleTypeValidator.new('my_type2', String) }
+    let(:new_validator1) { HashValidator::Validator::SimpleValidator.new('my_type1', lambda { |v| true }) }
+    let(:new_validator2) { HashValidator::Validator::SimpleValidator.new('my_type2', lambda { |v| true }) }
 
     it 'allows validators with unique names' do
       expect {

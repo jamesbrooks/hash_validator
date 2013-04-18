@@ -14,5 +14,4 @@ class HashValidator::Validator::PresenceValidator < HashValidator::Validator::Ba
   end
 end
 
-
 HashValidator.append_validator(HashValidator::Validator::PresenceValidator.new)
