@@ -53,7 +53,7 @@ validator.valid?
 validator.errors
   # {
       :user => {
-          :last_name => "should be string",
+          :last_name => "string required",
                 :age => "numeric required",
               :likes => "array required"
       }
