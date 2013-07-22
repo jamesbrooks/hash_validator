@@ -65,6 +65,7 @@ validator.errors
 Define a validation hash which will be used to validate. This has can be nested as deeply as required using the following values to validate specific value types:
 
 * `array`
+* `boolean`
 * `complex`
 * `float`
 * `integer`
