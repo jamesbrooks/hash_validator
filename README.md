@@ -64,9 +64,16 @@ validator.errors
 
 Define a validation hash which will be used to validate. This has can be nested as deeply as required using the following values to validate specific value types:
 
-* `string`
-* `numeric`
 * `array`
+* `complex`
+* `float`
+* `integer`
+* `numeric`
+* `range`
+* `rational`
+* `regexp`
+* `string`
+* `symbol`
 * `time`
 * `required`: just requires any value to be present for the designated key.
 * hashes are validates by nesting validations, or if just the presence of a hash is required `{}` can be used.
