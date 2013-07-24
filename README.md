@@ -83,6 +83,7 @@ Define a validation hash which will be used to validate. This has can be nested 
 Additional validations exist to validate beyond simple typing, such as:
 
 * An Enumerable instance: validates that the value is contained within the supplied enumerable.
+* A lambda/Proc instance: validates that the lambda/proc returns true when the value is supplied (lambdas must accept only one argument).
 * `email`: email address validation (string + email address).
 
 Example use-cases include Ruby APIs (I'm currently using it in a Rails API that I'm building for better error responses to developers).
