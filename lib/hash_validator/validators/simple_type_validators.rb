@@ -1,6 +1,7 @@
 [
   Array,
   Complex,
+  Enumerable,
   Float,
   Integer,
   Numeric,

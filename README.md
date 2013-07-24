@@ -67,6 +67,7 @@ Define a validation hash which will be used to validate. This has can be nested 
 * `array`
 * `boolean`
 * `complex`
+* `enumerable`
 * `float`
 * `integer`
 * `numeric`
@@ -81,7 +82,8 @@ Define a validation hash which will be used to validate. This has can be nested 
 
 Additional validations exist to validate beyond simple typing, such as:
 
-* `email`: email address validation (string + email address)
+* An Enumerable instance: validates that the value is contained within the supplied enumerable.
+* `email`: email address validation (string + email address).
 
 Example use-cases include Ruby APIs (I'm currently using it in a Rails API that I'm building for better error responses to developers).
 

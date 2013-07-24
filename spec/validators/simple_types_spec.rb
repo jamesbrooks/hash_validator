@@ -13,6 +13,10 @@ describe 'Simple validator types' do
       valid:   [ Complex(1), Complex(2, 3), Complex('2/3+3/4i'), 0.3.to_c ],
       invalid: [ nil, '', 123, '123', Time.now, '[1]', [1], '2/3+3/4i', Rational(2, 3) ]
     },
+    enumerable: {
+      valid:   [ [], [ 1, 2, 3 ], 1..Float::INFINITY ],
+      invalid: [ nil, '', 123, '123', Time.now, Float::INFINITY ]
+    },
     float: {
       valid:   [ 0.0, 1.1, 1.23, Float::INFINITY, Float::EPSILON ],
       invalid: [ nil, '', 0, 123, '123', Time.now, '[1]', '2013-03-04' ]
