@@ -57,5 +57,13 @@ describe 'Enumerable validator' do
         validate({ number: -5 }, validations).valid?.should be_false
       end
     end
+
+    describe 'nil values' do
+      let(:validations) {{ fruit: [ nil, :apple, :banana ] }}
+
+      it 'should validate true if a nil value is present' do
+        validate({ fruit: nil }, validations).valid?.should be_true
+      end
+    end
   end
 end

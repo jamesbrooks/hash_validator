@@ -18,15 +18,7 @@ class HashValidator::Validator::HashValidator < HashValidator::Validator::Base
     errors = (errors[key] = {})
 
     validations.each do |v_key, v_value|
-      validator = HashValidator.validator_for(v_value)
-
-      # Key presence
-      unless value[v_key]
-        errors[v_key] = validator.presence_error_message
-        next
-      end
-
-      validator.validate(v_key, value[v_key], v_value, errors)
+      HashValidator.validator_for(v_value).validate(v_key, value[v_key], v_value, errors)
     end
 
     # Cleanup errors (remove any empty nested errors)
