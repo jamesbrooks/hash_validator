@@ -7,3 +7,4 @@ end
 require 'hash_validator/base'
 require 'hash_validator/version'
 require 'hash_validator/validators'
+require 'hash_validator/validations'
