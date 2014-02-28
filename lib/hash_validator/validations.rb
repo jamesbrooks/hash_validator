@@ -5,3 +5,4 @@ end
 
 # Load validators
 require 'hash_validator/validations/optional'
+require 'hash_validator/validations/many'
