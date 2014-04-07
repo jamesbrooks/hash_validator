@@ -188,6 +188,38 @@ describe HashValidator do
           v.errors.should eq({ bar: 'string required', user: { age: 'is required', likes: 'array required' } })
         end
       end
+
+      describe 'optional validations' do
+        let(:validations) {{ foo: 'numeric', bar: HashValidator.optional('string') }}
+
+        it 'should validate a complex hash' do
+          v = validate(complex_hash, validations)
+          v.valid?.should be_true
+          v.errors.should be_empty
+        end
+
+        it 'should not validate a complex hash 2' do
+          v = validate(invalid_complex_hash, validations)
+          v.valid?.should be_false
+          v.errors.should eq({ bar: 'string required' })
+        end
+      end
+
+      describe 'many validations' do
+        let(:validations) {{ foo: 'numeric', bar: 'string', user: { first_name: 'string', likes: HashValidator.many('string') } }}
+
+        it 'should validate a complex hash' do
+          v = validate(complex_hash, validations)
+          v.valid?.should be_true
+          v.errors.should be_empty
+        end
+
+        it 'should not validate a complex hash 2' do
+          v = validate(invalid_complex_hash, validations)
+          v.valid?.should be_false
+          v.errors.should eq({ bar: 'string required', user: { likes: 'enumerable required' } })
+        end
+      end
     end
   end
 end
