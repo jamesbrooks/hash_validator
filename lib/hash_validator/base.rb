@@ -6,7 +6,7 @@ class HashValidator::Base
     self.errors      = {}
     self.hash        = hash
     self.validations = validations
-
+    
     validate
   end
 
@@ -14,12 +14,16 @@ class HashValidator::Base
     errors.empty?
   end
 
-  def self.validate(hash, validations)
+  def self.validate(hash, validations, strict = false)
+    @strict = strict
     new(hash, validations)
   end
-
-
-private
+  
+  def self.strict?
+    @strict
+  end
+  
+  private
   def validate
     HashValidator.validator_for(hash).validate(:base, self.hash, self.validations, self.errors)
     self.errors = errors[:base]

@@ -1,5 +1,5 @@
 module HashValidatorSpecHelper
-  def validate(hash, validations)
-    HashValidator.validate(hash, validations)
+  def validate(hash, validations, strict = false)
+    HashValidator.validate(hash, validations, strict)
   end
 end
