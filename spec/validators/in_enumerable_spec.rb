@@ -20,19 +20,19 @@ describe 'Enumerable validator' do
       let(:validations) {{ fruit: [ 'apple', 'banana', 'carrot' ] }}
 
       it 'should validate true if the value is present' do
-        validate({ fruit: 'apple' }, validations).valid?.should be_true
+        expect(validate({ fruit: 'apple' }, validations).valid?).to eq true
       end
 
       it 'should validate false if the value is not present' do
-        validate({ fruit: 'pear' }, validations).valid?.should be_false
+        expect(validate({ fruit: 'pear' }, validations).valid?).to eq false
       end
 
       it 'should validate false if the key is not present' do
-        validate({ something: 'apple' }, validations).valid?.should be_false
+        expect(validate({ something: 'apple' }, validations).valid?).to eq false
       end
 
       it 'should provide an appropriate error message is the value is not present' do
-        validate({ fruit: 'pear' }, validations).errors.should eq({ fruit: 'value from list required' })
+        expect(validate({ fruit: 'pear' }, validations).errors).to eq({ fruit: 'value from list required' })
       end
     end
 
@@ -40,10 +40,10 @@ describe 'Enumerable validator' do
       let(:validations) {{ number: 1..10 }}
 
       it 'should validate true if the value is present' do
-        validate({ number: 5 }, validations).valid?.should be_true
+        expect(validate({ number: 5 }, validations).valid?).to eq true
       end
       it 'should validate false if the value is not present' do
-        validate({ number: 15 }, validations).valid?.should be_false
+        expect(validate({ number: 15 }, validations).valid?).to eq false
       end
     end
 
@@ -51,10 +51,10 @@ describe 'Enumerable validator' do
       let(:validations) {{ number: 1..Float::INFINITY }}
 
       it 'should validate true if the value is present' do
-        validate({ number: 5 }, validations).valid?.should be_true
+        expect(validate({ number: 5 }, validations).valid?).to eq true
       end
       it 'should validate false if the value is not present' do
-        validate({ number: -5 }, validations).valid?.should be_false
+        expect(validate({ number: -5 }, validations).valid?).to eq false
       end
     end
 
@@ -62,7 +62,7 @@ describe 'Enumerable validator' do
       let(:validations) {{ fruit: [ nil, :apple, :banana ] }}
 
       it 'should validate true if a nil value is present' do
-        validate({ fruit: nil }, validations).valid?.should be_true
+        expect(validate({ fruit: nil }, validations).valid?).to eq true
       end
     end
   end

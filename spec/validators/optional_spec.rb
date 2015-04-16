@@ -10,13 +10,13 @@ describe HashValidator::Validator::Base do
 
   describe '#should_validate?' do
     it 'should validate an Optional validation' do
-      validator.should_validate?(optional('string')).should be_true
+      expect(validator.should_validate?(optional('string'))).to eq true
     end
 
     it 'should not validate other things' do
-      validator.should_validate?('string').should be_false
-      validator.should_validate?('array').should  be_false
-      validator.should_validate?(nil).should      be_false
+      expect(validator.should_validate?('string')).to eq false
+      expect(validator.should_validate?('array')).to eq false
+      expect(validator.should_validate?(nil)).to eq false
     end
   end
 
@@ -24,33 +24,33 @@ describe HashValidator::Validator::Base do
     it 'should accept a missing value' do
       validator.validate(:key, nil, optional('string'), errors)
 
-      errors.should be_empty
+      expect(errors).to be_empty
     end
 
     it 'should accept a present, matching value' do
       validator.validate(:key, 'foo', optional('string'), errors)
 
-      errors.should be_empty
+      expect(errors).to be_empty
     end
 
     it 'should reject a present, non-matching value' do
       validator.validate(:key, 123, optional('string'), errors)
 
-      errors.should_not be_empty
-      errors.should eq({ key: 'string required' })
+      expect(errors).not_to be_empty
+      expect(errors).to eq({ key: 'string required' })
     end
 
     it 'should accept a present, matching hash' do
       validator.validate(:key, {v: 'foo'}, optional({v: 'string'}), errors)
 
-      errors.should be_empty
+      expect(errors).to be_empty
     end
 
     it 'should reject a present, non-matching hash' do
       validator.validate(:key, {}, optional({v: 'string'}), errors)
 
-      errors.should_not be_empty
-      errors.should eq({ key: {v: 'string required'} })
+      expect(errors).not_to be_empty
+      expect(errors).to eq({ key: {v: 'string required'} })
     end
   end
 end

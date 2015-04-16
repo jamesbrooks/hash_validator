@@ -31,7 +31,7 @@ describe HashValidator::Validator::SimpleValidator do
       it "validates the string '#{value}'" do
         short_string_validator.validate(:key, value, {}, errors)
 
-        errors.should be_empty
+        expect(errors).to be_empty
       end
     end
 
@@ -39,7 +39,7 @@ describe HashValidator::Validator::SimpleValidator do
       it "does not validate bad value '#{value}'" do
         short_string_validator.validate(:key, value, {}, errors)
 
-        errors.should eq({ key: 'short_string required' })
+        expect(errors).to eq({ key: 'short_string required' })
       end
     end
   end
