@@ -1,10 +1,10 @@
 # Hash Validator
 
-[![Gem Version](https://badge.fury.io/rb/hash_validator.png)](http://badge.fury.io/rb/hash_validator)
-[![Build Status](https://travis-ci.org/JamesBrooks/hash_validator.png)](https://travis-ci.org/JamesBrooks/hash_validator)
-[![Coverage Status](https://coveralls.io/repos/JamesBrooks/hash_validator/badge.png?branch=master)](https://coveralls.io/r/JamesBrooks/hash_validator)
-[![Code Climate](https://codeclimate.com/github/JamesBrooks/hash_validator.png)](https://codeclimate.com/github/JamesBrooks/hash_validator)
-[![Dependency Status](https://gemnasium.com/JamesBrooks/hash_validator.png)](https://gemnasium.com/JamesBrooks/hash_validator)
+[![Gem Version](https://badge.fury.io/rb/hash_validator.svg)](http://badge.fury.io/rb/hash_validator)
+[![Build Status](https://travis-ci.org/jamesbrooks/hash_validator.svg)](https://travis-ci.org/jamesbrooks/hash_validator)
+[![Coverage Status](https://coveralls.io/repos/jamesbrooks/hash_validator/badge.svg?branch=master)](https://coveralls.io/r/jamesbrooks/hash_validator)
+[![Code Climate](https://codeclimate.com/github/JamesBrooks/hash_validator.svg)](https://codeclimate.com/github/JamesBrooks/hash_validator)
+[![Dependency Status](https://gemnasium.com/jamesbrooks/hash_validator.png)](https://gemnasium.com/jamesbrooks/hash_validator)
 
 Ruby library to validate hashes (Hash) against user-defined requirements
 
