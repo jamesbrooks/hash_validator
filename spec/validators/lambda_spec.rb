@@ -29,11 +29,11 @@ describe 'Functional validator' do
     let(:validations) {{ number: lambda { |n| n.odd? } }}
 
     it 'should validate true when the number is odd' do
-      validate({ number: 1 }, validations).valid?.should be_true
+      expect(validate({ number: 1 }, validations).valid?).to eq true
     end
 
     it 'should validate false when the number is even' do
-      validate({ number: 2 }, validations).valid?.should be_false
+      expect(validate({ number: 2 }, validations).valid?).to eq false
     end
   end
 
@@ -41,7 +41,7 @@ describe 'Functional validator' do
     let(:validations) {{ number: lambda { |n| n.odd? } }}
 
     it 'should validate false when an exception occurs within the lambda' do
-      validate({ number: '2' }, validations).valid?.should be_false
+      expect(validate({ number: '2' }, validations).valid?).to eq false
     end
   end
 end

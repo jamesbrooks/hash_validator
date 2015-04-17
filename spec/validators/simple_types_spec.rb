@@ -59,8 +59,8 @@ describe 'Simple validator types' do
         it "validates '#{value}' successful" do
           validator = HashValidator.validate({ v: value }, { v: type.to_s })
 
-          validator.valid?.should be_true
-          validator.errors.should be_empty
+          expect(validator.valid?).to eq true
+          expect(validator.errors).to be_empty
         end
       end
 
@@ -68,8 +68,8 @@ describe 'Simple validator types' do
         it "validates '#{value}' with failure" do
           validator = HashValidator.validate({ v: value }, { v: type.to_s })
 
-          validator.valid?.should be_false
-          validator.errors.should eq({ v: "#{type} required" })
+          expect(validator.valid?).to eq false
+          expect(validator.errors).to eq({ v: "#{type} required" })
         end
       end
     end

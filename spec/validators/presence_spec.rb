@@ -6,13 +6,13 @@ describe HashValidator::Validator::Base do
 
   describe '#should_validate?' do
     it 'should validate the name "required"' do
-      validator.should_validate?('required').should be_true
+      expect(validator.should_validate?('required')).to eq true
     end
 
     it 'should not validate other names' do
-      validator.should_validate?('string').should be_false
-      validator.should_validate?('array').should  be_false
-      validator.should_validate?(nil).should      be_false
+      expect(validator.should_validate?('string')).to eq false
+      expect(validator.should_validate?('array')).to eq false
+      expect(validator.should_validate?(nil)).to eq false
     end
   end
 
@@ -20,26 +20,26 @@ describe HashValidator::Validator::Base do
     it 'should validate a string with true' do
       validator.validate(:key, 'test', {}, errors)
 
-      errors.should be_empty
+      expect(errors).to be_empty
     end
 
     it 'should validate a number with true' do
       validator.validate(:key, 123, {}, errors)
 
-      errors.should be_empty
+      expect(errors).to be_empty
     end
 
     it 'should validate a time with true' do
       validator.validate(:key, Time.now, {}, errors)
 
-      errors.should be_empty
+      expect(errors).to be_empty
     end
 
     it 'should validate nil with false' do
       validator.validate(:key, nil, {}, errors)
 
-      errors.should_not be_empty
-      errors.should eq({ key: 'is required' })
+      expect(errors).not_to be_empty
+      expect(errors).to eq({ key: 'is required' })
     end
   end
 end

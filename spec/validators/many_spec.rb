@@ -10,13 +10,13 @@ describe HashValidator::Validator::Base do
 
   describe '#should_validate?' do
     it 'should validate an Many validation' do
-      validator.should_validate?(many('string')).should be_true
+      expect(validator.should_validate?(many('string'))).to eq true
     end
 
     it 'should not validate other things' do
-      validator.should_validate?('string').should be_false
-      validator.should_validate?('array').should  be_false
-      validator.should_validate?(nil).should      be_false
+      expect(validator.should_validate?('string')).to eq false
+      expect(validator.should_validate?('array')).to eq false
+      expect(validator.should_validate?(nil)).to eq false
     end
   end
 
@@ -24,37 +24,37 @@ describe HashValidator::Validator::Base do
     it 'should accept an empty array' do
       validator.validate(:key, [], many('string'), errors)
 
-      errors.should be_empty
+      expect(errors).to be_empty
     end
 
     it 'should accept an array of matching elements' do
       validator.validate(:key, ['a', 'b'], many('string'), errors)
 
-      errors.should be_empty
+      expect(errors).to be_empty
     end
 
     it 'should not accept an array including a non-matching element' do
       validator.validate(:key, ['a', 2], many('string'), errors)
 
-      errors.should eq({ key: [nil, 'string required'] })
+      expect(errors).to eq({ key: [nil, 'string required'] })
     end
 
     it 'should accept an array of matching hashes' do
       validator.validate(:key, [{v: 'a'}, {v: 'b'}], many({v: 'string'}), errors)
 
-      errors.should be_empty
+      expect(errors).to be_empty
     end
 
     it 'should not accept an array including a non-matching element' do
       validator.validate(:key, [{v: 'a'}, {v: 2}], many({v: 'string'}), errors)
 
-      errors.should eq({ key: [nil, {v: 'string required'}] })
+      expect(errors).to eq({ key: [nil, {v: 'string required'}] })
     end
 
     it 'should not accept a non-enumerable' do
       validator.validate(:key, 'a', many({v: 'string'}), errors)
 
-      errors.should eq({ key: 'enumerable required' })
+      expect(errors).to eq({ key: 'enumerable required' })
     end
   end
 end
