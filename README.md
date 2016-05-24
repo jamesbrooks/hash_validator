@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/jamesbrooks/hash_validator.svg)](https://travis-ci.org/jamesbrooks/hash_validator)
 [![Coverage Status](https://coveralls.io/repos/jamesbrooks/hash_validator/badge.svg?branch=master)](https://coveralls.io/r/jamesbrooks/hash_validator)
 [![Code Climate](https://codeclimate.com/github/JamesBrooks/hash_validator.svg)](https://codeclimate.com/github/JamesBrooks/hash_validator)
-[![Dependency Status](https://gemnasium.com/jamesbrooks/hash_validator.png)](https://gemnasium.com/jamesbrooks/hash_validator)
+[![Dependency Status](https://gemnasium.com/badges/github.com/JamesBrooks/hash_validator.svg)](https://gemnasium.com/github.com/JamesBrooks/hash_validator)
 
 Ruby library to validate hashes (Hash) against user-defined requirements
 
