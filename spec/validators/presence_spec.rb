@@ -41,5 +41,11 @@ describe HashValidator::Validator::Base do
       expect(errors).not_to be_empty
       expect(errors).to eq({ key: 'is required' })
     end
+
+    it 'should validate false with true' do
+      validator.validate(:key, false, {}, errors)
+
+      expect(errors).to be_empty
+    end
   end
 end
