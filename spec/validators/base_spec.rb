@@ -9,9 +9,8 @@ describe HashValidator::Validator::Base do
   end
 
   it 'does not allow a validator to be created with an invalid name' do
-    expect { HashValidator::Validator::Base.new(nil) }.to raise_error(StandardError, 'Validator must be initialized with a valid name (string with length greater than zero)')
-    expect { HashValidator::Validator::Base.new(123) }.to raise_error(StandardError, 'Validator must be initialized with a valid name (string with length greater than zero)')
-    expect { HashValidator::Validator::Base.new('')  }.to raise_error(StandardError, 'Validator must be initialized with a valid name (string with length greater than zero)')
+    expect { HashValidator::Validator::Base.new(nil) }.to raise_error(StandardError, 'Validator must be initialized with a valid name (length greater than zero)')
+    expect { HashValidator::Validator::Base.new('')  }.to raise_error(StandardError, 'Validator must be initialized with a valid name (length greater than zero)')
   end
 
   describe '#validate' do

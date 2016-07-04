@@ -3,15 +3,15 @@ class HashValidator::Validator::Base
 
 
   def initialize(name)
-    unless name.is_a?(String) && name.size > 0
-      raise StandardError.new('Validator must be initialized with a valid name (string with length greater than zero)')
-    end
+    self.name = name.to_s
 
-    self.name = name
+    unless self.name.size > 0
+      raise StandardError.new('Validator must be initialized with a valid name (length greater than zero)')
+    end
   end
 
   def should_validate?(name)
-    self.name == name
+    self.name == name.to_s
   end
 
   def presence_error_message

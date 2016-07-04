@@ -71,6 +71,16 @@ describe HashValidator do
       end
     end
 
+    describe 'validator syntax' do
+      it 'should allow strings as validator names' do
+        expect(validate({ v: 'test' }, { v: 'string' }).valid?).to eq true
+      end
+
+      it 'should allow symbols as validator names' do
+        expect(validate({ v: 'test' }, { v: :string }).valid?).to eq true
+      end
+    end
+
     describe 'full validations' do
       let(:empty_hash) {{}}
 
@@ -226,7 +236,7 @@ end
 
 describe 'Strict Validation' do
   let(:simple_hash) { { foo: 'bar', bar: 'foo' } }
-  
+
   let(:complex_hash) {{
       foo: 1,
       user: {
@@ -236,26 +246,26 @@ describe 'Strict Validation' do
         likes:      [ 'Ruby', 'Kendo', 'Board Games' ]
       }
     }}
-  
+
   let(:validations) { { foo: 'string' } }
-  
+
   let(:complex_validations) {{
       foo: 'integer',
       user: {
         first_name: 'string', age: 'integer'
       }
     }}
-  
+
   it 'reports which keys are not expected for a simple hash' do
     v = validate(simple_hash, validations, true)
     expect(v.valid?).to eq false
     expect(v.errors).to eq({ bar: 'key not expected' })
   end
-  
+
   it 'reports which keys are not expected for a complex hash' do
     v = validate(complex_hash, complex_validations, true)
     expect(v.valid?).to eq false
     expect(v.errors).to eq(user: { last_name: 'key not expected', likes: 'key not expected' })
   end
-  
+
 end
