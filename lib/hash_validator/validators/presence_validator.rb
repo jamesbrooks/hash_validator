@@ -8,7 +8,7 @@ class HashValidator::Validator::PresenceValidator < HashValidator::Validator::Ba
   end
 
   def validate(key, value, validations, errors)
-    if value.nil?
+    if value.blank?
       errors[key] = presence_error_message
     end
   end
