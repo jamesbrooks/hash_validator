@@ -184,7 +184,16 @@ describe HashValidator do
       end
 
       describe 'nested validations' do
-        let(:validations) {{ foo: 'numeric', bar: 'string', user: { first_name: 'string', age: 'required', likes: 'array' } }}
+        let(:validations) {{
+          foo: 'numeric',
+          bar: 'string',
+          user: {
+            first_name: 'string',
+            last_name:  /^(Brooks|Smith)$/,
+            age:        'required',
+            likes:      'array'
+          }
+        }}
 
         it 'should validate a complex hash' do
           v = validate(complex_hash, validations)
