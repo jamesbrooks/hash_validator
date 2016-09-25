@@ -84,6 +84,7 @@ Additional validations exist to validate beyond simple typing, such as:
 
 * An Enumerable instance: validates that the value is contained within the supplied enumerable.
 * A lambda/Proc instance: validates that the lambda/proc returns true when the value is supplied (lambdas must accept only one argument).
+* A regexp instance: validates that the regex returns a match when the value is supplied (Regexp#match(value) is not nil).
 * `email`: email address validation (string + email address).
 
 Example use-cases include Ruby APIs (I'm currently using it in a Rails API that I'm building for better error responses to developers).
