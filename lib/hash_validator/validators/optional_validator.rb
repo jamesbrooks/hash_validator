@@ -10,7 +10,7 @@ module HashValidator
       end
 
       def validate(key, value, validations, errors)
-        if value
+        unless value.nil?
           ::HashValidator.validator_for(validations.validation).validate(key, value, validations.validation, errors)
           errors.delete(key) if errors[key].respond_to?(:empty?) && errors[key].empty?
         end
