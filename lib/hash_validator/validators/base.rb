@@ -18,7 +18,7 @@ class HashValidator::Validator::Base
     "#{self.name} required"
   end
 
-  def validate(key, value, validations, errors)
+  def validate(*)
     raise StandardError.new('validate should not be called directly on BaseValidator')
   end
 end

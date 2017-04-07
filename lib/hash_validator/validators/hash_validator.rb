@@ -20,7 +20,7 @@ class HashValidator::Validator::HashValidator < HashValidator::Validator::Base
     validations.each do |v_key, v_value|
       HashValidator.validator_for(v_value).validate(v_key, value[v_key], v_value, errors)
     end
-    
+
     if HashValidator::Base.strict?
       value.keys.each do |k|
         errors[k] = 'key not expected' unless validations[k]
@@ -28,7 +28,7 @@ class HashValidator::Validator::HashValidator < HashValidator::Validator::Base
     end
 
     # Cleanup errors (remove any empty nested errors)
-    errors.delete_if { |k,v| v.empty? }
+    errors.delete_if { |_,v| v.empty? }
   end
 end
 
