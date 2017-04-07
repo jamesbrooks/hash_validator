@@ -3,7 +3,7 @@ class HashValidator::Validator::BooleanValidator < HashValidator::Validator::Bas
     super('boolean')  # The name of the validator
   end
 
-  def validate(key, value, validations, errors)
+  def validate(key, value, _validations, errors)
     unless [TrueClass, FalseClass].include?(value.class)
       errors[key] = presence_error_message
     end

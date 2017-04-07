@@ -7,7 +7,7 @@ class HashValidator::Validator::EmailValidator < HashValidator::Validator::Base
     'is not a valid email'
   end
 
-  def validate(key, value, validations, errors)
+  def validate(key, value, _validations, errors)
     unless value.is_a?(String) && value.include?("@")
       errors[key] = presence_error_message
     end
