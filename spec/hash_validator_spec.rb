@@ -239,6 +239,22 @@ describe HashValidator do
           expect(v.errors).to eq({ bar: 'string required', user: { likes: 'enumerable required' } })
         end
       end
+
+      describe 'multiple validations' do
+        let(:validations) {{ foo: 'numeric', user: { age: HashValidator.multiple('numeric', 1..100) } }}
+
+        it 'should validate a complex hash' do
+          v = validate(complex_hash, validations)
+          expect(v.valid?).to eq true
+          expect(v.errors).to be_empty
+        end
+
+        it 'should not validate a complex hash 2' do
+          v = validate(invalid_complex_hash, validations)
+          expect(v.valid?).to eq false
+          expect(v.errors).to eq({ user: { age: 'numeric required, value from list required' } })
+        end
+      end
     end
   end
 end
