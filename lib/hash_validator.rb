@@ -10,6 +10,10 @@ module HashValidator
   def self.many(validation)
     Validations::Many.new(validation)
   end
+
+  def self.multiple(*validations)
+    Validations::Multiple.new(validations)
+  end
 end
 
 require 'hash_validator/base'

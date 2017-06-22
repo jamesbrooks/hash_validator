@@ -116,6 +116,19 @@ validator.valid?  # => true
 validator.errors  # => {}
 ```
 
+## Multiple validators
+
+Multiple validators can be applied to a single key, e.g.
+
+```ruby
+HashValidator.validate(
+  { foo: 73 },
+  { foo: HashValidator.multiple('numeric', 1..100) }
+)
+```
+
+This is particularly useful when defining custom validators.
+
 ## Contributing
 
 1. Fork it
