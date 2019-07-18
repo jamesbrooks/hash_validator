@@ -7,10 +7,6 @@ class HashValidator::Validator::ClassValidator < HashValidator::Validator::Base
     rhs.is_a?(Class)
   end
 
-  def presence_error_message
-    'value from list required'
-  end
-
   def validate(key, value, klass, errors)
     unless value.is_a?(klass)
       errors[key] = "#{klass} required"
