@@ -27,7 +27,7 @@ Or install it yourself as:
 # Validations hash
 validations = {
   user: {
-    first_name: 'string',
+    first_name: String,
     last_name:  'string',
     age:        'numeric',
     likes:      'array'
@@ -78,6 +78,8 @@ Define a validation hash which will be used to validate. This has can be nested 
 * `time`
 * `required`: just requires any value to be present for the designated key.
 * hashes are validates by nesting validations, or if just the presence of a hash is required `{}` can be used.
+
+On top of the pre-defined simple types, classes can be used directly (e.g. String) to validate the presence of a value of a desired class.
 
 Additional validations exist to validate beyond simple typing, such as:
 
