@@ -25,6 +25,7 @@ end
 # Load validators
 require 'hash_validator/validators/base'
 require 'hash_validator/validators/simple_validator'
+require 'hash_validator/validators/class_validator'
 require 'hash_validator/validators/hash_validator'
 require 'hash_validator/validators/presence_validator'
 require 'hash_validator/validators/simple_type_validators'
