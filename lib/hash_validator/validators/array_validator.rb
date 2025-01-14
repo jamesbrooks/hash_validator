@@ -46,7 +46,21 @@ class HashValidator::Validator::ArrayValidator < HashValidator::Validator::Base
     return if array_spec.empty?
 
     size_spec = array_spec[:size]
-    if size_spec.present?
+
+    size_spec_present = case size_spec
+      when String
+        !object.strip.empty?
+      when NilClass
+        false
+      when Numeric
+        true
+      when Array, Hash
+        !object.empty?
+      else
+        !!object
+      end
+
+    if size_spec_present
       unless value.size == size_spec
         errors[key] = "The required size of array is #{size_spec} but is #{value.size}."
         return
