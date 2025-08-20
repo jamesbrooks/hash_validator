@@ -4,10 +4,15 @@ class HashValidator::Validator::HashValidator < HashValidator::Validator::Base
   end
 
   def should_validate?(rhs)
-    rhs.is_a?(Hash)
+    rhs.is_a?(Hash) || (defined?(ActionController::Parameters) && rhs.is_a?(ActionController::Parameters))
   end
 
   def validate(key, value, validations, errors)
+    # Convert ActionController::Parameters to Hash if needed
+    if !value.is_a?(Hash) && defined?(ActionController::Parameters) && value.is_a?(ActionController::Parameters)
+      value = value.to_unsafe_h
+    end
+
     # Validate hash
     unless value.is_a?(Hash)
       errors[key] = presence_error_message

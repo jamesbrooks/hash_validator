@@ -6,6 +6,10 @@
 
 Ruby library to validate hashes (Hash) against user-defined requirements
 
+## Requirements
+
+* Ruby 3.0+
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -20,76 +24,183 @@ Or install it yourself as:
 
     $ gem install hash_validator
 
-## Example
+## Quick Start
 
 ```ruby
-# Validations hash
-validations = {
+require 'hash_validator'
+
+# Define validation rules
+validations = { name: 'string', age: 'integer', email: 'email' }
+
+# Validate a hash
+validator = HashValidator.validate(
+  { name: 'John', age: 30, email: 'john@example.com' },
+  validations
+)
+
+validator.valid?  # => true
+```
+
+## Examples
+
+### Successful Validation
+```ruby
+validations = { name: 'string', active: 'boolean', tags: 'array' }
+hash = { name: 'Product', active: true, tags: ['new', 'featured'] }
+
+validator = HashValidator.validate(hash, validations)
+validator.valid?  # => true
+validator.errors  # => {}
+```
+
+### Failed Validation
+```ruby
+validations = { 
   user: {
-    first_name: String,
-    last_name:  'string',
-    age:        'numeric',
-    likes:      'array'
+    first_name: 'string',
+    age: 'integer',
+    email: 'email'
   }
 }
 
-# Hash to validate
-hash = {
-  foo: 1,
-  bar: 'baz',
+hash = { 
   user: {
     first_name: 'James',
-    last_name:  12345
+    age: 'thirty',  # Should be integer
+    # email missing
   }
 }
 
 validator = HashValidator.validate(hash, validations)
+validator.valid?  # => false
+validator.errors  # => { user: { age: "integer required", email: "email required" } }
+```
 
-validator.valid?
-  # => false
-
-validator.errors
-  # {
-      :user => {
-          :last_name => "string required",
-                :age => "numeric required",
-              :likes => "array required"
+### Rails Controller Example
+```ruby
+class UsersController < ApplicationController
+  def create
+    validations = {
+      user: {
+        name: 'string',
+        email: 'email',
+        age: 'integer',
+        website: 'url',
+        preferences: {
+          theme: ['light', 'dark'],
+          notifications: 'boolean'
+        }
       }
     }
+    
+    validator = HashValidator.validate(params, validations)
+    
+    if validator.valid?
+      user = User.create(params[:user])
+      render json: { user: user }, status: :created
+    else
+      render json: { errors: validator.errors }, status: :unprocessable_entity
+    end
+  end
+end
+
+# Example request that would pass validation:
+# POST /users
+# {
+#   "user": {
+#     "name": "John Doe",
+#     "email": "john@example.com", 
+#     "age": 30,
+#     "website": "https://johndoe.com",
+#     "preferences": {
+#       "theme": "dark",
+#       "notifications": true
+#     }
+#   }
+# }
 ```
 
 ## Usage
 
-Define a validation hash which will be used to validate. This has can be nested as deeply as required using the following values to validate specific value types:
+Define a validation hash which will be used to validate. This hash can be nested as deeply as required using the following validators:
 
-* `array`
-* `boolean`
-* `complex`
-* `enumerable`
-* `float`
-* `integer`
-* `numeric`
-* `range`
-* `rational`
-* `regexp`
-* `string`
-* `symbol`
-* `time`
-* `required`: just requires any value to be present for the designated key.
-* hashes are validates by nesting validations, or if just the presence of a hash is required `{}` can be used.
+| Validator | Validation Configuration | Example Valid Payload |
+|-----------|-------------------------|----------------------|
+| `alpha` | `{ name: 'alpha' }` | `{ name: 'James' }` |
+| `alphanumeric` | `{ username: 'alphanumeric' }` | `{ username: 'user123' }` |
+| `array` | `{ tags: 'array' }` | `{ tags: ['ruby', 'rails'] }` |
+| `boolean` | `{ active: 'boolean' }` | `{ active: true }` |
+| `complex` | `{ number: 'complex' }` | `{ number: Complex(1, 2) }` |
+| `digits` | `{ zip_code: 'digits' }` | `{ zip_code: '12345' }` |
+| `email` | `{ contact: 'email' }` | `{ contact: 'user@example.com' }` |
+| `enumerable` | `{ status: ['active', 'inactive'] }` | `{ status: 'active' }` |
+| `float` | `{ price: 'float' }` | `{ price: 19.99 }` |
+| `hex_color` | `{ color: 'hex_color' }` | `{ color: '#ff0000' }` |
+| `integer` | `{ age: 'integer' }` | `{ age: 25 }` |
+| `json` | `{ config: 'json' }` | `{ config: '{"theme": "dark"}' }` |
+| `numeric` | `{ score: 'numeric' }` | `{ score: 95.5 }` |
+| `range` | `{ priority: 1..10 }` | `{ priority: 5 }` |
+| `rational` | `{ ratio: 'rational' }` | `{ ratio: Rational(3, 4) }` |
+| `regexp` | `{ code: /^[A-Z]{3}$/ }` | `{ code: 'ABC' }` |
+| `required` | `{ id: 'required' }` | `{ id: 'any_value' }` |
+| `string` | `{ title: 'string' }` | `{ title: 'Hello World' }` |
+| `symbol` | `{ type: 'symbol' }` | `{ type: :user }` |
+| `time` | `{ created_at: 'time' }` | `{ created_at: Time.now }` |
+| `url` | `{ website: 'url' }` | `{ website: 'https://example.com' }` |
 
-On top of the pre-defined simple types, classes can be used directly (e.g. String) to validate the presence of a value of a desired class.
+For hash validation, use nested validations or `{}` to just require a hash to be present.
 
-Additional validations exist to validate beyond simple typing, such as:
+## Advanced Features
 
-* An Enumerable instance: validates that the value is contained within the supplied enumerable.
-* A lambda/Proc instance: validates that the lambda/proc returns true when the value is supplied (lambdas must accept only one argument).
-* A regexp instance: validates that the regex returns a match when the value is supplied (Regexp#match(value) is not nil).
-* `email`: email address validation (string + email address).
+### Class Validation
+On top of the pre-defined validators, classes can be used directly to validate the presence of a value of a specific class:
 
-Example use-cases include Ruby APIs (I'm currently using it in a Rails API that I'm building for better error responses to developers).
+```ruby
+validations = { created_at: Time, user_id: Integer }
+hash = { created_at: Time.now, user_id: 123 }
+HashValidator.validate(hash, validations).valid?  # => true
+```
 
-## Custom validations
+### Enumerable Validation
+Validate that a value is contained within a supplied enumerable:
+
+```ruby
+validations = { status: ['active', 'inactive', 'pending'] }
+hash = { status: 'active' }
+HashValidator.validate(hash, validations).valid?  # => true
+```
+
+### Lambda/Proc Validation
+Use custom logic with lambdas or procs (must accept only one argument):
+
+```ruby
+validations = { age: ->(value) { value.is_a?(Integer) && value >= 18 } }
+hash = { age: 25 }
+HashValidator.validate(hash, validations).valid?  # => true
+```
+
+### Regular Expression Validation
+Validate that a string matches a regex pattern:
+
+```ruby
+validations = { product_code: /^[A-Z]{2}\d{4}$/ }
+hash = { product_code: 'AB1234' }
+HashValidator.validate(hash, validations).valid?  # => true
+```
+
+### Multiple Validators
+Apply multiple validators to a single key:
+
+```ruby
+HashValidator.validate(
+  { score: 85 },
+  { score: HashValidator.multiple('numeric', 1..100) }
+).valid?  # => true
+```
+
+This is particularly useful when combining built-in validators with custom validation logic.
+
+## Custom Validations
 
 Allows custom defined validations (must inherit from `HashValidator::Validator::Base`). Example:
 
@@ -115,19 +226,6 @@ validator = HashValidator.validate({ age: 27 }, { age: 'odd' })
 validator.valid?  # => true
 validator.errors  # => {}
 ```
-
-## Multiple validators
-
-Multiple validators can be applied to a single key, e.g.
-
-```ruby
-HashValidator.validate(
-  { foo: 73 },
-  { foo: HashValidator.multiple('numeric', 1..100) }
-)
-```
-
-This is particularly useful when defining custom validators.
 
 ## Contributing
 
