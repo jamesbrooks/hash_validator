@@ -137,6 +137,9 @@ Define a validation hash which will be used to validate. This hash can be nested
 | `float` | `{ price: 'float' }` | `{ price: 19.99 }` |
 | `hex_color` | `{ color: 'hex_color' }` | `{ color: '#ff0000' }` |
 | `integer` | `{ age: 'integer' }` | `{ age: 25 }` |
+| `ip` | `{ address: 'ip' }` | `{ address: '192.168.1.1' }` |
+| `ipv4` | `{ address: 'ipv4' }` | `{ address: '10.0.0.1' }` |
+| `ipv6` | `{ address: 'ipv6' }` | `{ address: '2001:db8::1' }` |
 | `json` | `{ config: 'json' }` | `{ config: '{"theme": "dark"}' }` |
 | `numeric` | `{ score: 'numeric' }` | `{ score: 95.5 }` |
 | `range` | `{ priority: 1..10 }` | `{ priority: 5 }` |
