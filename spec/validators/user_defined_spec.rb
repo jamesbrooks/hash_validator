@@ -11,7 +11,7 @@ describe 'User-defined validator' do
 
         def validate(key, value, validations, errors)
           unless value.is_a?(Integer) && value.odd?
-            errors[key] = presence_error_message
+            errors[key] = error_message
           end
         end
       end

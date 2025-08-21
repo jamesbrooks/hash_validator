@@ -7,14 +7,12 @@ class HashValidator::Validator::EnumerableValidator < HashValidator::Validator::
     rhs.is_a?(Enumerable)
   end
 
-  def presence_error_message
+  def error_message
     'value from list required'
   end
 
-  def validate(key, value, validations, errors)
-    unless validations.include?(value)
-      errors[key] = presence_error_message
-    end
+  def valid?(value, validations)
+    validations.include?(value)
   end
 end
 

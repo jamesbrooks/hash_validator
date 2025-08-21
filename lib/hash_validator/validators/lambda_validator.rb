@@ -15,17 +15,14 @@ class HashValidator::Validator::LambdaValidator < HashValidator::Validator::Base
     end
   end
 
-  def presence_error_message
+  def error_message
     'is not valid'
   end
 
-  def validate(key, value, lambda, errors)
-    unless lambda.call(value)
-      errors[key] = presence_error_message
-    end
-
+  def valid?(value, lambda)
+    lambda.call(value)
   rescue
-    errors[key] = presence_error_message
+    false
   end
 end
 

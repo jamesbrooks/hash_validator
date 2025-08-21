@@ -5,19 +5,12 @@ class HashValidator::Validator::JsonValidator < HashValidator::Validator::Base
     super('json')  # The name of the validator
   end
 
-  def presence_error_message
+  def error_message
     'is not valid JSON'
   end
 
-  def validate(key, value, _validations, errors)
-    unless value.is_a?(String) && valid_json?(value)
-      errors[key] = presence_error_message
-    end
-  end
-
-  private
-
-  def valid_json?(value)
+  def valid?(value)
+    return false unless value.is_a?(String)
     JSON.parse(value)
     true
   rescue JSON::ParserError

@@ -12,9 +12,7 @@ class HashValidator::Validator::SimpleValidator < HashValidator::Validator::Base
     self.lambda = lambda
   end
 
-  def validate(key, value, _validations, errors)
-    unless lambda.call(value)
-      errors[key] = presence_error_message
-    end
+  def valid?(value)
+    lambda.call(value)
   end
 end

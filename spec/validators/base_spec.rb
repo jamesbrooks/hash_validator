@@ -16,8 +16,8 @@ describe HashValidator::Validator::Base do
   describe '#validate' do
     let(:validator) { HashValidator::Validator::Base.new('test') }
 
-    it 'throws an exception as base validators cant actually validate' do
-      expect { validator.validate('key', 'value', {}, {}) }.to raise_error(StandardError, 'validate should not be called directly on BaseValidator')
+    it 'throws an exception as base validators must implement valid? or override validate' do
+      expect { validator.validate('key', 'value', {}, {}) }.to raise_error(StandardError, 'Validator must implement either valid? or override validate method')
     end
   end
 end

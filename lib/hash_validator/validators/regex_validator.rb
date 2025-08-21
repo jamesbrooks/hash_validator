@@ -7,14 +7,12 @@ class HashValidator::Validator::RegexpValidator < HashValidator::Validator::Base
     rhs.is_a?(Regexp)
   end
 
-  def presence_error_message
+  def error_message
     'does not match regular expression'
   end
 
-  def validate(key, value, regexp, errors)
-    unless regexp.match(value.to_s)
-      errors[key] = presence_error_message
-    end
+  def valid?(value, regexp)
+    regexp.match(value.to_s)
   end
 end
 

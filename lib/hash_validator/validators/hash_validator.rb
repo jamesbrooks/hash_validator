@@ -15,7 +15,7 @@ class HashValidator::Validator::HashValidator < HashValidator::Validator::Base
 
     # Validate hash
     unless value.is_a?(Hash)
-      errors[key] = presence_error_message
+      errors[key] = error_message
       return
     end
 

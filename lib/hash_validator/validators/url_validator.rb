@@ -5,19 +5,12 @@ class HashValidator::Validator::UrlValidator < HashValidator::Validator::Base
     super('url')  # The name of the validator
   end
 
-  def presence_error_message
+  def error_message
     'is not a valid URL'
   end
 
-  def validate(key, value, _validations, errors)
-    unless value.is_a?(String) && valid_url?(value)
-      errors[key] = presence_error_message
-    end
-  end
-
-  private
-
-  def valid_url?(value)
+  def valid?(value)
+    return false unless value.is_a?(String)
     uri = URI.parse(value)
     %w[http https ftp].include?(uri.scheme)
   rescue URI::InvalidURIError

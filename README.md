@@ -205,7 +205,11 @@ This is particularly useful when combining built-in validators with custom valid
 
 ## Custom Validations
 
-Allows custom defined validations (must inherit from `HashValidator::Validator::Base`). Example:
+Allows custom defined validations (must inherit from `HashValidator::Validator::Base`). 
+
+### Simple Example (using `valid?`)
+
+For simple boolean validations, implement the `valid?` method:
 
 ```ruby
 # Define our custom validator
@@ -213,21 +217,66 @@ class HashValidator::Validator::OddValidator < HashValidator::Validator::Base
   def initialize
     super('odd')  # The name of the validator
   end
-
-  def validate(key, value, validations, errors)
-    unless value.is_a?(Integer) && value.odd?
-      errors[key] = presence_error_message
-    end
+  
+  def error_message
+    'must be an odd number'
+  end
+  
+  def valid?(value)
+    value.is_a?(Integer) && value.odd?
   end
 end
 
 # Add the validator
 HashValidator.append_validator(HashValidator::Validator::OddValidator.new)
 
-# Now the validator can be used! e.g.
+# Now the validator can be used!
 validator = HashValidator.validate({ age: 27 }, { age: 'odd' })
 validator.valid?  # => true
 validator.errors  # => {}
+
+validator = HashValidator.validate({ age: 26 }, { age: 'odd' })
+validator.valid?  # => false
+validator.errors  # => { age: 'must be an odd number' }
+```
+
+### Complex Example (using `validate`)
+
+For more complex validations that need access to the validation parameters or custom error handling, override the `validate` method:
+
+```ruby
+# Define a validator that checks if a number is within a range
+class HashValidator::Validator::RangeValidator < HashValidator::Validator::Base
+  def initialize
+    super('_range')  # Underscore prefix as it's invoked through the validation parameter
+  end
+  
+  def should_validate?(validation)
+    validation.is_a?(Range)
+  end
+  
+  def error_message
+    'is out of range'
+  end
+  
+  def validate(key, value, range, errors)
+    unless range.include?(value)
+      errors[key] = "must be between #{range.min} and #{range.max}"
+    end
+  end
+end
+
+# Add the validator
+HashValidator.append_validator(HashValidator::Validator::RangeValidator.new)
+
+# Now the validator can be used with Range objects!
+validator = HashValidator.validate({ age: 25 }, { age: 18..65 })
+validator.valid?  # => true
+validator.errors  # => {}
+
+validator = HashValidator.validate({ age: 10 }, { age: 18..65 })
+validator.valid?  # => false
+validator.errors  # => { age: 'must be between 18 and 65' }
 ```
 
 ## Contributing

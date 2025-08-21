@@ -9,13 +9,13 @@ module HashValidator
         validation.is_a?(Validations::Many)
       end
 
-      def presence_error_message
+      def error_message
         "enumerable required"
       end
 
       def validate(key, value, validations, errors)
         unless value.is_a?(Enumerable)
-          errors[key] = presence_error_message
+          errors[key] = error_message
           return
         end
 

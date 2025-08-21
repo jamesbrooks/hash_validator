@@ -3,14 +3,12 @@ class HashValidator::Validator::PresenceValidator < HashValidator::Validator::Ba
     super('required')
   end
 
-  def presence_error_message
+  def error_message
     'is required'
   end
 
-  def validate(key, value, _validations, errors)
-    if value.nil?
-      errors[key] = presence_error_message
-    end
+  def valid?(value)
+    !value.nil?
   end
 end
 
