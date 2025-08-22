@@ -2,9 +2,40 @@ module HashValidator
   @@validators = []
 
 
-  def self.add_validator(validator)
-    unless validator.is_a?(HashValidator::Validator::Base)
-      raise StandardError.new('validators need to inherit from HashValidator::Validator::Base')
+  def self.remove_validator(name)
+    name = name.to_s
+    @@validators.reject! { |v| v.name == name }
+  end
+
+  def self.add_validator(*args)
+    validator = case args.length
+    when 1
+      # Instance-based validator (existing behavior)
+      validator_instance = args[0]
+      unless validator_instance.is_a?(HashValidator::Validator::Base)
+        raise StandardError.new('validators need to inherit from HashValidator::Validator::Base')
+      end
+      validator_instance
+    when 2
+      # Dynamic validator with options
+      name = args[0]
+      options = args[1]
+      
+      if options.is_a?(Hash)
+        if options[:pattern]
+          # Pattern-based validator
+          HashValidator::Validator::DynamicPatternValidator.new(name, options[:pattern], options[:error_message])
+        elsif options[:func]
+          # Function-based validator  
+          HashValidator::Validator::DynamicFuncValidator.new(name, options[:func], options[:error_message])
+        else
+          raise ArgumentError, 'Options hash must contain either :pattern or :func key'
+        end
+      else
+        raise ArgumentError, 'Second argument must be an options hash with :pattern or :func key'
+      end
+    else
+      raise ArgumentError, 'add_validator expects 1 argument (validator instance) or 2 arguments (name, options)'
     end
 
     if @@validators.detect { |v| v.name == validator.name }
@@ -24,6 +55,8 @@ end
 
 # Load validators
 require 'hash_validator/validators/base'
+require 'hash_validator/validators/dynamic_pattern_validator'
+require 'hash_validator/validators/dynamic_func_validator'
 require 'hash_validator/validators/simple_validator'
 require 'hash_validator/validators/class_validator'
 require 'hash_validator/validators/hash_validator'

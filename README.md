@@ -279,6 +279,85 @@ validator.valid?  # => false
 validator.errors  # => { age: 'must be between 18 and 65' }
 ```
 
+## Simple Custom Validators
+
+For simpler use cases, you can define custom validators without creating a full class using pattern matching or custom functions.
+
+### Pattern-Based Validators
+
+Use regular expressions to validate string formats:
+
+```ruby
+# Add a validator for odd numbers using a pattern
+HashValidator.add_validator('odd_string', 
+  pattern: /\A\d*[13579]\z/, 
+  error_message: 'must be an odd number string')
+
+# Add a validator for US phone numbers
+HashValidator.add_validator('us_phone',
+  pattern: /\A\d{3}-\d{3}-\d{4}\z/,
+  error_message: 'must be a valid US phone number (XXX-XXX-XXXX)')
+
+# Use the validators
+validator = HashValidator.validate(
+  { number: '27', phone: '555-123-4567' },
+  { number: 'odd_string', phone: 'us_phone' }
+)
+validator.valid?  # => true
+
+validator = HashValidator.validate(
+  { number: '26', phone: '5551234567' },
+  { number: 'odd_string', phone: 'us_phone' }
+)
+validator.valid?  # => false
+validator.errors  # => { number: 'must be an odd number string', phone: 'must be a valid US phone number (XXX-XXX-XXXX)' }
+```
+
+### Function-Based Validators
+
+Use lambdas or procs for custom validation logic:
+
+```ruby
+# Add a validator for adult age using a lambda
+HashValidator.add_validator('adult_age',
+  func: ->(age) { age.is_a?(Integer) && age >= 18 },
+  error_message: 'must be 18 or older')
+
+# Add a validator for palindromes using a proc
+HashValidator.add_validator('palindrome',
+  func: proc { |str| str.to_s == str.to_s.reverse },
+  error_message: 'must be a palindrome')
+
+# Use the validators
+validator = HashValidator.validate(
+  { age: 25, word: 'racecar' },
+  { age: 'adult_age', word: 'palindrome' }
+)
+validator.valid?  # => true
+
+validator = HashValidator.validate(
+  { age: 16, word: 'hello' },
+  { age: 'adult_age', word: 'palindrome' }
+)
+validator.valid?  # => false
+validator.errors  # => { age: 'must be 18 or older', word: 'must be a palindrome' }
+```
+
+### Removing Custom Validators
+
+You can remove custom validators when they're no longer needed:
+
+```ruby
+# Remove a specific validator
+HashValidator.remove_validator('adult_age')
+```
+
+These simple validators are ideal for:
+- Quick format validation without regex in your main code
+- Reusable validation logic across your application
+- Keeping validation definitions close to your configuration
+- Avoiding the overhead of creating full validator classes for simple rules
+
 ## Contributing
 
 1. Fork it
