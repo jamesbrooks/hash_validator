@@ -12,4 +12,4 @@ class HashValidator::Validator::EmailValidator < HashValidator::Validator::Base
   end
 end
 
-HashValidator.append_validator(HashValidator::Validator::EmailValidator.new)
+HashValidator.add_validator(HashValidator::Validator::EmailValidator.new)

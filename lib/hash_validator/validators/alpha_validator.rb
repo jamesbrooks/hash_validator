@@ -12,4 +12,4 @@ class HashValidator::Validator::AlphaValidator < HashValidator::Validator::Base
   end
 end
 
-HashValidator.append_validator(HashValidator::Validator::AlphaValidator.new)
+HashValidator.add_validator(HashValidator::Validator::AlphaValidator.new)

@@ -18,4 +18,4 @@ class HashValidator::Validator::UrlValidator < HashValidator::Validator::Base
   end
 end
 
-HashValidator.append_validator(HashValidator::Validator::UrlValidator.new)
+HashValidator.add_validator(HashValidator::Validator::UrlValidator.new)

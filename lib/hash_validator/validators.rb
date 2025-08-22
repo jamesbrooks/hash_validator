@@ -2,7 +2,7 @@ module HashValidator
   @@validators = []
 
 
-  def self.append_validator(validator)
+  def self.add_validator(validator)
     unless validator.is_a?(HashValidator::Validator::Base)
       raise StandardError.new('validators need to inherit from HashValidator::Validator::Base')
     end

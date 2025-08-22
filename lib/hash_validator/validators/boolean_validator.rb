@@ -8,4 +8,4 @@ class HashValidator::Validator::BooleanValidator < HashValidator::Validator::Bas
   end
 end
 
-HashValidator.append_validator(HashValidator::Validator::BooleanValidator.new)
+HashValidator.add_validator(HashValidator::Validator::BooleanValidator.new)

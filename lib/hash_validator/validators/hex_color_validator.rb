@@ -12,4 +12,4 @@ class HashValidator::Validator::HexColorValidator < HashValidator::Validator::Ba
   end
 end
 
-HashValidator.append_validator(HashValidator::Validator::HexColorValidator.new)
+HashValidator.add_validator(HashValidator::Validator::HexColorValidator.new)

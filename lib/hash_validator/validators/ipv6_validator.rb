@@ -19,4 +19,4 @@ class HashValidator::Validator::Ipv6Validator < HashValidator::Validator::Base
   end
 end
 
-HashValidator.append_validator(HashValidator::Validator::Ipv6Validator.new)
+HashValidator.add_validator(HashValidator::Validator::Ipv6Validator.new)

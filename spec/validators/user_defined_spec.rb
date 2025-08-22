@@ -72,7 +72,7 @@ describe 'User-defined validator' do
   end
 
   describe 'Integrating with the entire validation system' do
-    before { HashValidator.append_validator(validator) rescue nil }  # rescue to prevent: validators need to have unique names
+    before { HashValidator.add_validator(validator) rescue nil }  # rescue to prevent: validators need to have unique names
 
     it 'can be looked up using #validator_for' do
       expect(HashValidator.validator_for('odd')).to be_a_kind_of(HashValidator::Validator::OddValidator)

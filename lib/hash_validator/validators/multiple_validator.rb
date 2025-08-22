@@ -24,4 +24,4 @@ module HashValidator
   end
 end
 
-HashValidator.append_validator(HashValidator::Validator::MultipleValidator.new)
+HashValidator.add_validator(HashValidator::Validator::MultipleValidator.new)

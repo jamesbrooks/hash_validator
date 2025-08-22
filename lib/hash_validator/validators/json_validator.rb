@@ -18,4 +18,4 @@ class HashValidator::Validator::JsonValidator < HashValidator::Validator::Base
   end
 end
 
-HashValidator.append_validator(HashValidator::Validator::JsonValidator.new)
+HashValidator.add_validator(HashValidator::Validator::JsonValidator.new)

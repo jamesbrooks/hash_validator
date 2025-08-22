@@ -19,4 +19,4 @@ module HashValidator
   end
 end
 
-HashValidator.append_validator(HashValidator::Validator::OptionalValidator.new)
+HashValidator.add_validator(HashValidator::Validator::OptionalValidator.new)

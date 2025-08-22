@@ -16,4 +16,4 @@ class HashValidator::Validator::RegexpValidator < HashValidator::Validator::Base
   end
 end
 
-HashValidator.append_validator(HashValidator::Validator::RegexpValidator.new)
+HashValidator.add_validator(HashValidator::Validator::RegexpValidator.new)

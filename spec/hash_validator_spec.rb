@@ -7,20 +7,20 @@ describe HashValidator do
 
     it 'allows validators with unique names' do
       expect {
-        HashValidator.append_validator(new_validator1)
+        HashValidator.add_validator(new_validator1)
       }.to_not raise_error
     end
 
     it 'does not allow validators with conflicting names' do
       expect {
-        HashValidator.append_validator(new_validator2)
-        HashValidator.append_validator(new_validator2)
+        HashValidator.add_validator(new_validator2)
+        HashValidator.add_validator(new_validator2)
       }.to raise_error(StandardError, 'validators need to have unique names')
     end
 
     it 'does not allow validators that do not inherit from the base validator class' do
       expect {
-        HashValidator.append_validator('Not a validator')
+        HashValidator.add_validator('Not a validator')
       }.to raise_error(StandardError, 'validators need to inherit from HashValidator::Validator::Base')
     end
   end

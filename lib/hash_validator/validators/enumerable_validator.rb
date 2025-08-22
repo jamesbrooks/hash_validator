@@ -16,4 +16,4 @@ class HashValidator::Validator::EnumerableValidator < HashValidator::Validator::
   end
 end
 
-HashValidator.append_validator(HashValidator::Validator::EnumerableValidator.new)
+HashValidator.add_validator(HashValidator::Validator::EnumerableValidator.new)

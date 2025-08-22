@@ -12,4 +12,4 @@ class HashValidator::Validator::DigitsValidator < HashValidator::Validator::Base
   end
 end
 
-HashValidator.append_validator(HashValidator::Validator::DigitsValidator.new)
+HashValidator.add_validator(HashValidator::Validator::DigitsValidator.new)

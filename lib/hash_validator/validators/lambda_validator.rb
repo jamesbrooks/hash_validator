@@ -29,4 +29,4 @@ end
 class HashValidator::Validator::LambdaValidator::InvalidArgumentCount < StandardError
 end
 
-HashValidator.append_validator(HashValidator::Validator::LambdaValidator.new)
+HashValidator.add_validator(HashValidator::Validator::LambdaValidator.new)

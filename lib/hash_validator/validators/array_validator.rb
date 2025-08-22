@@ -77,4 +77,4 @@ class HashValidator::Validator::ArrayValidator < HashValidator::Validator::Base
   end
 end
 
-HashValidator.append_validator(HashValidator::Validator::ArrayValidator.new)
+HashValidator.add_validator(HashValidator::Validator::ArrayValidator.new)

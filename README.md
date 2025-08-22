@@ -228,7 +228,7 @@ class HashValidator::Validator::OddValidator < HashValidator::Validator::Base
 end
 
 # Add the validator
-HashValidator.append_validator(HashValidator::Validator::OddValidator.new)
+HashValidator.add_validator(HashValidator::Validator::OddValidator.new)
 
 # Now the validator can be used!
 validator = HashValidator.validate({ age: 27 }, { age: 'odd' })
@@ -267,7 +267,7 @@ class HashValidator::Validator::RangeValidator < HashValidator::Validator::Base
 end
 
 # Add the validator
-HashValidator.append_validator(HashValidator::Validator::RangeValidator.new)
+HashValidator.add_validator(HashValidator::Validator::RangeValidator.new)
 
 # Now the validator can be used with Range objects!
 validator = HashValidator.validate({ age: 25 }, { age: 18..65 })

@@ -14,4 +14,4 @@ class HashValidator::Validator::ClassValidator < HashValidator::Validator::Base
   end
 end
 
-HashValidator.append_validator(HashValidator::Validator::ClassValidator.new)
+HashValidator.add_validator(HashValidator::Validator::ClassValidator.new)

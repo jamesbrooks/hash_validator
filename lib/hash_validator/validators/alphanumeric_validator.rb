@@ -12,4 +12,4 @@ class HashValidator::Validator::AlphanumericValidator < HashValidator::Validator
   end
 end
 
-HashValidator.append_validator(HashValidator::Validator::AlphanumericValidator.new)
+HashValidator.add_validator(HashValidator::Validator::AlphanumericValidator.new)
