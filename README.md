@@ -55,7 +55,7 @@ validator.errors  # => {}
 
 ### Failed Validation
 ```ruby
-validations = { 
+validations = {
   user: {
     first_name: 'string',
     age: 'integer',
@@ -63,7 +63,7 @@ validations = {
   }
 }
 
-hash = { 
+hash = {
   user: {
     first_name: 'James',
     age: 'thirty',  # Should be integer
@@ -92,9 +92,9 @@ class UsersController < ApplicationController
         }
       }
     }
-    
+
     validator = HashValidator.validate(params, validations)
-    
+
     if validator.valid?
       user = User.create(params[:user])
       render json: { user: user }, status: :created
@@ -109,7 +109,7 @@ end
 # {
 #   "user": {
 #     "name": "John Doe",
-#     "email": "john@example.com", 
+#     "email": "john@example.com",
 #     "age": 30,
 #     "website": "https://johndoe.com",
 #     "preferences": {
@@ -205,7 +205,7 @@ This is particularly useful when combining built-in validators with custom valid
 
 ## Custom Validations
 
-Allows custom defined validations (must inherit from `HashValidator::Validator::Base`). 
+Allows custom defined validations (must inherit from `HashValidator::Validator::Base`).
 
 ### Simple Example (using `valid?`)
 
@@ -217,11 +217,11 @@ class HashValidator::Validator::OddValidator < HashValidator::Validator::Base
   def initialize
     super('odd')  # The name of the validator
   end
-  
+
   def error_message
     'must be an odd number'
   end
-  
+
   def valid?(value)
     value.is_a?(Integer) && value.odd?
   end
@@ -250,15 +250,15 @@ class HashValidator::Validator::RangeValidator < HashValidator::Validator::Base
   def initialize
     super('_range')  # Underscore prefix as it's invoked through the validation parameter
   end
-  
+
   def should_validate?(validation)
     validation.is_a?(Range)
   end
-  
+
   def error_message
     'is out of range'
   end
-  
+
   def validate(key, value, range, errors)
     unless range.include?(value)
       errors[key] = "must be between #{range.min} and #{range.max}"
@@ -283,14 +283,44 @@ validator.errors  # => { age: 'must be between 18 and 65' }
 
 For simpler use cases, you can define custom validators without creating a full class using pattern matching or custom functions.
 
+### Configuration DSL
+
+Use the configuration DSL to define multiple validators at once, similar to a Rails initializer:
+
+```ruby
+# In a Rails app, this would go in config/initializers/hash_validator.rb
+HashValidator.configure do |config|
+  # Add instance-based validators
+  config.add_validator HashValidator::Validator::CustomValidator.new
+
+  # Add pattern-based validators
+  config.add_validator 'phone',
+    pattern: /\A\+?[1-9]\d{1,14}\z/,
+    error_message: 'must be a valid international phone number'
+
+  config.add_validator 'postal_code',
+    pattern: /\A[A-Z0-9]{3,10}\z/i,
+    error_message: 'must be a valid postal code'
+
+  # Add function-based validators
+  config.add_validator 'adult',
+    func: ->(age) { age.is_a?(Integer) && age >= 18 },
+    error_message: 'must be 18 or older'
+
+  config.add_validator 'business_hours',
+    func: ->(hour) { hour.between?(9, 17) },
+    error_message: 'must be between 9 AM and 5 PM'
+end
+```
+
 ### Pattern-Based Validators
 
 Use regular expressions to validate string formats:
 
 ```ruby
 # Add a validator for odd numbers using a pattern
-HashValidator.add_validator('odd_string', 
-  pattern: /\A\d*[13579]\z/, 
+HashValidator.add_validator('odd_string',
+  pattern: /\A\d*[13579]\z/,
   error_message: 'must be an odd number string')
 
 # Add a validator for US phone numbers
