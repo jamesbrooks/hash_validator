@@ -1,4 +1,12 @@
 require 'rubygems'
+require 'simplecov'
+require 'simplecov_json_formatter'
+
+SimpleCov.start do
+    formatter SimpleCov::Formatter::JSONFormatter
+    add_filter '/spec/'
+end
+
 require 'hash_validator'
 require 'hash_validator_spec_helper'
 
