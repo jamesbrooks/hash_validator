@@ -223,5 +223,12 @@ describe 'Array validator' do
 
       expect(errors).to be_empty
     end
+
+    it 'should handle Symbol size specification using boolean coercion' do
+      validator.validate(:key, ['item'], [:array, { size: :symbol }], errors)
+
+      expect(errors).not_to be_empty
+      expect(errors).to eq({ key: 'The required size of array is symbol but is 1.' })
+    end
   end
 end

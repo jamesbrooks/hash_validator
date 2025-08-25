@@ -19,5 +19,18 @@ describe HashValidator::Validator::Base do
     it 'throws an exception as base validators must implement valid? or override validate' do
       expect { validator.validate('key', 'value', {}, {}) }.to raise_error(StandardError, 'Validator must implement either valid? or override validate method')
     end
+
+    it 'throws an exception when valid? method has invalid arity' do
+      # Create a validator with a valid? method that accepts an invalid number of arguments (3)
+      invalid_arity_validator = Class.new(HashValidator::Validator::Base) do
+        def valid?(value, validations, extra_param)
+          true
+        end
+      end.new('invalid_arity')
+
+      expect {
+        invalid_arity_validator.validate('key', 'value', {}, {})
+      }.to raise_error(StandardError, 'valid? method must accept either 1 argument (value) or 2 arguments (value, validations)')
+    end
   end
 end

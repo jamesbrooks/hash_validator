@@ -23,6 +23,24 @@ describe HashValidator do
         HashValidator.add_validator('Not a validator')
       }.to raise_error(StandardError, 'validators need to inherit from HashValidator::Validator::Base')
     end
+
+    it 'raises ArgumentError when options hash is missing :pattern or :func key' do
+      expect {
+        HashValidator.add_validator('test_validator', { invalid_key: 'value' })
+      }.to raise_error(ArgumentError, 'Options hash must contain either :pattern or :func key')
+    end
+
+    it 'raises ArgumentError when second argument is not a hash' do
+      expect {
+        HashValidator.add_validator('test_validator', 'not_a_hash')
+      }.to raise_error(ArgumentError, 'Second argument must be an options hash with :pattern or :func key')
+    end
+
+    it 'raises ArgumentError when wrong number of arguments are provided' do
+      expect {
+        HashValidator.add_validator('test', 'arg2', 'arg3')
+      }.to raise_error(ArgumentError, 'add_validator expects 1 argument (validator instance) or 2 arguments (name, options)')
+    end
   end
 
   describe '#validate' do
