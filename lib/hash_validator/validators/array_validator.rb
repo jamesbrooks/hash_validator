@@ -12,31 +12,23 @@ class HashValidator::Validator::ArrayValidator < HashValidator::Validator::Base
   end
 
   def validate(key, value, specification, errors)
-    # the first item in specification is always ":array"
-    unless specification[0] == :array
+    # Validate specification format
+    if specification[0] != :array
       errors[key] = "Wrong array specification. The #{:array} is expected as first item."
-      return
-    end
-
-    if specification.size > 2
+    elsif specification.size > 2
       errors[key] = "Wrong size of array specification. Allowed is one or two items."
-      return
-    end
-
-    unless value.is_a?(Array)
+    elsif !value.is_a?(Array)
       errors[key] = "#{Array} required"
-      return
+    elsif specification.size >= 2 && !specification[1].nil?
+      validate_array_specification(key, value, specification[1], errors)
     end
+  end
 
-    # second item is optional
-    return if specification.size < 2
+  private
 
-    array_spec = specification[1]
-    return if array_spec.nil? # array specification is optional
-
-    if array_spec.is_a?(Numeric)
-      array_spec = { size: array_spec }
-    end
+  def validate_array_specification(key, value, array_spec, errors)
+    # Convert numeric specification to hash format
+    array_spec = { size: array_spec } if array_spec.is_a?(Numeric)
 
     unless array_spec.is_a?(Hash)
       errors[key] = "Second item of array specification must be #{Hash} or #{Numeric}."
@@ -45,35 +37,38 @@ class HashValidator::Validator::ArrayValidator < HashValidator::Validator::Base
 
     return if array_spec.empty?
 
+    validate_size_specification(key, value, array_spec, errors) if errors.empty?
+    validate_allowed_keys(key, array_spec, errors) if errors.empty?
+  end
+
+  def validate_size_specification(key, value, array_spec, errors)
     size_spec = array_spec[:size]
 
     size_spec_present = case size_spec
       when String
-        !object.strip.empty?
+        !size_spec.strip.empty?
       when NilClass
         false
       when Numeric
         true
       when Array, Hash
-        !object.empty?
+        !size_spec.empty?
       else
-        !!object
+        !!size_spec
       end
 
-    if size_spec_present
-      unless value.size == size_spec
-        errors[key] = "The required size of array is #{size_spec} but is #{value.size}."
-        return
-      end
+    if size_spec_present && value.size != size_spec
+      errors[key] = "The required size of array is #{size_spec} but is #{value.size}."
     end
+  end
 
+  def validate_allowed_keys(key, array_spec, errors)
     allowed_keys = [:size]
     wrong_keys = array_spec.keys - allowed_keys
 
-    return if wrong_keys.size < 1
-
-    errors[key] = "Not supported specification for array: #{wrong_keys.sort.join(", ")}."
-    return
+    if wrong_keys.any?
+      errors[key] = "Not supported specification for array: #{wrong_keys.sort.join(", ")}."
+    end
   end
 end
 

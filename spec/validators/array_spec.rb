@@ -177,5 +177,51 @@ describe 'Array validator' do
       expect(errors).not_to be_empty
       expect(errors).to eq({ key: 'Wrong size of array specification. Allowed is one or two items.' })
     end
+
+    # Edge cases that would trigger the original 'object' variable bug
+    it 'should handle String size specification (non-empty)' do
+      validator.validate(:key, ['item'], [:array, { size: 'non-empty' }], errors)
+
+      expect(errors).not_to be_empty
+      expect(errors).to eq({ key: 'The required size of array is non-empty but is 1.' })
+    end
+
+    it 'should handle empty String size specification' do
+      validator.validate(:key, [], [:array, { size: '' }], errors)
+
+      expect(errors).to be_empty
+    end
+
+    it 'should handle whitespace-only String size specification' do
+      validator.validate(:key, [], [:array, { size: '   ' }], errors)
+
+      expect(errors).to be_empty
+    end
+
+    it 'should handle Array size specification (non-empty)' do
+      validator.validate(:key, ['item'], [:array, { size: [1, 2, 3] }], errors)
+
+      expect(errors).not_to be_empty
+      expect(errors).to eq({ key: 'The required size of array is [1, 2, 3] but is 1.' })
+    end
+
+    it 'should handle empty Array size specification' do
+      validator.validate(:key, [], [:array, { size: [] }], errors)
+
+      expect(errors).to be_empty
+    end
+
+    it 'should handle Hash size specification (non-empty)' do
+      validator.validate(:key, ['item'], [:array, { size: { a: 1 } }], errors)
+
+      expect(errors).not_to be_empty
+      expect(errors).to eq({ key: 'The required size of array is {:a=>1} but is 1.' })
+    end
+
+    it 'should handle empty Hash size specification' do
+      validator.validate(:key, [], [:array, { size: {} }], errors)
+
+      expect(errors).to be_empty
+    end
   end
 end
