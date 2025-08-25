@@ -214,10 +214,11 @@ describe "Array validator" do
     end
 
     it "should handle Hash size specification (non-empty)" do
-      validator.validate(:key, ["item"], [:array, { size: { a: 1 } }], errors)
+      size_spec = { a: 1 }
+      validator.validate(:key, ["item"], [:array, { size: size_spec }], errors)
 
       expect(errors).not_to be_empty
-      expect(errors).to eq({ key: "The required size of array is {:a=>1} but is 1." })
+      expect(errors).to eq({ key: "The required size of array is #{size_spec.inspect} but is 1." })
     end
 
     it "should handle empty Hash size specification" do
