@@ -1,57 +1,59 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-describe 'Simple validator types' do
+require "spec_helper"
+
+describe "Simple validator types" do
   let(:errors) { Hash.new }
 
   # Simple types
   {
     array: {
-      valid:   [ [], [1], ['foo'], [1,['foo'],Time.now] ],
-      invalid: [ nil, '', 123, '123', Time.now, '[1]' ]
+      valid:   [ [], [1], ["foo"], [1, ["foo"], Time.now] ],
+      invalid: [ nil, "", 123, "123", Time.now, "[1]" ]
     },
     complex: {
-      valid:   [ Complex(1), Complex(2, 3), Complex('2/3+3/4i'), 0.3.to_c ],
-      invalid: [ nil, '', 123, '123', Time.now, '[1]', [1], '2/3+3/4i', Rational(2, 3) ]
+      valid:   [ Complex(1), Complex(2, 3), Complex("2/3+3/4i"), 0.3.to_c ],
+      invalid: [ nil, "", 123, "123", Time.now, "[1]", [1], "2/3+3/4i", Rational(2, 3) ]
     },
     enumerable: {
       valid:   [ [], [ 1, 2, 3 ], 1..Float::INFINITY ],
-      invalid: [ nil, '', 123, '123', Time.now, Float::INFINITY ]
+      invalid: [ nil, "", 123, "123", Time.now, Float::INFINITY ]
     },
     float: {
       valid:   [ 0.0, 1.1, 1.23, Float::INFINITY, Float::EPSILON ],
-      invalid: [ nil, '', 0, 123, '123', Time.now, '[1]', '2013-03-04' ]
+      invalid: [ nil, "", 0, 123, "123", Time.now, "[1]", "2013-03-04" ]
     },
     integer: {
       valid:   [ 0, -1000000, 1000000 ],
-      invalid: [ nil, '', 1.1, '123', Time.now, '[1]', '2013-03-04' ]
+      invalid: [ nil, "", 1.1, "123", Time.now, "[1]", "2013-03-04" ]
     },
     numeric: {
       valid:   [ 0, 123, 123.45 ],
-      invalid: [ nil, '', '123', Time.now ]
+      invalid: [ nil, "", "123", Time.now ]
     },
     range: {
-      valid:   [ 0..10, 'a'..'z', 5..0 ],
-      invalid: [ nil, '', '123', Time.now ]
+      valid:   [ 0..10, "a".."z", 5..0 ],
+      invalid: [ nil, "", "123", Time.now ]
     },
     rational: {
       valid:   [ Rational(1), Rational(2, 3), 3.to_r ],
-      invalid: [ nil, '', 123, '123', Time.now, '[1]', [1], Complex(2, 3) ]
+      invalid: [ nil, "", 123, "123", Time.now, "[1]", [1], Complex(2, 3) ]
     },
     regexp: {
-      valid:   [ /[a-z]+/, //, //i, Regexp.new('.*') ],
-      invalid: [ nil, '', 123, '123', Time.now, '.*' ]
+      valid:   [ /[a-z]+/, //, //i, Regexp.new(".*") ],
+      invalid: [ nil, "", 123, "123", Time.now, ".*" ]
     },
     string: {
-      valid:   [ '', 'Hello World', '12345' ],
+      valid:   [ "", "Hello World", "12345" ],
       invalid: [ nil, 12345, Time.now ]
     },
     symbol: {
-      valid:   [ :foo, :'', 'bar'.to_sym ],
-      invalid: [ nil, '', 1.1, '123', Time.now, '[1]', '2013-03-04' ]
+      valid:   [ :foo, :'', "bar".to_sym ],
+      invalid: [ nil, "", 1.1, "123", Time.now, "[1]", "2013-03-04" ]
     },
     time: {
       valid:   [ Time.now ],
-      invalid: [ nil, '', 123, '123', "#{Time.now}" ]
+      invalid: [ nil, "", 123, "123", "#{Time.now}" ]
     }
   }.each do |type, data|
     describe type do

@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class HashValidator::Validator::Ipv4Validator < HashValidator::Validator::Base
   def initialize
-    super('ipv4')  # The name of the validator
+    super("ipv4")  # The name of the validator
   end
 
   def error_message
-    'is not a valid IPv4 address'
+    "is not a valid IPv4 address"
   end
 
   def valid?(value)

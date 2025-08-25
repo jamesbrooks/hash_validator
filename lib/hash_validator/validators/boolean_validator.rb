@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class HashValidator::Validator::BooleanValidator < HashValidator::Validator::Base
   def initialize
-    super('boolean')  # The name of the validator
+    super("boolean")  # The name of the validator
   end
 
   def valid?(value)

@@ -1,52 +1,54 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-describe 'Class validator' do
+require "spec_helper"
+
+describe "Class validator" do
   let(:errors) { Hash.new }
 
   {
     Array => {
-      valid:   [ [], [1], ['foo'], [1,['foo'],Time.now] ],
-      invalid: [ nil, '', 123, '123', Time.now, '[1]' ]
+      valid:   [ [], [1], ["foo"], [1, ["foo"], Time.now] ],
+      invalid: [ nil, "", 123, "123", Time.now, "[1]" ]
     },
     Complex => {
-      valid:   [ Complex(1), Complex(2, 3), Complex('2/3+3/4i'), 0.3.to_c ],
-      invalid: [ nil, '', 123, '123', Time.now, '[1]', [1], '2/3+3/4i', Rational(2, 3) ]
+      valid:   [ Complex(1), Complex(2, 3), Complex("2/3+3/4i"), 0.3.to_c ],
+      invalid: [ nil, "", 123, "123", Time.now, "[1]", [1], "2/3+3/4i", Rational(2, 3) ]
     },
     Float => {
       valid:   [ 0.0, 1.1, 1.23, Float::INFINITY, Float::EPSILON ],
-      invalid: [ nil, '', 0, 123, '123', Time.now, '[1]', '2013-03-04' ]
+      invalid: [ nil, "", 0, 123, "123", Time.now, "[1]", "2013-03-04" ]
     },
     Integer => {
       valid:   [ 0, -1000000, 1000000 ],
-      invalid: [ nil, '', 1.1, '123', Time.now, '[1]', '2013-03-04' ]
+      invalid: [ nil, "", 1.1, "123", Time.now, "[1]", "2013-03-04" ]
     },
     Numeric => {
       valid:   [ 0, 123, 123.45 ],
-      invalid: [ nil, '', '123', Time.now ]
+      invalid: [ nil, "", "123", Time.now ]
     },
     Range => {
-      valid:   [ 0..10, 'a'..'z', 5..0 ],
-      invalid: [ nil, '', '123', Time.now ]
+      valid:   [ 0..10, "a".."z", 5..0 ],
+      invalid: [ nil, "", "123", Time.now ]
     },
     Rational => {
       valid:   [ Rational(1), Rational(2, 3), 3.to_r ],
-      invalid: [ nil, '', 123, '123', Time.now, '[1]', [1], Complex(2, 3) ]
+      invalid: [ nil, "", 123, "123", Time.now, "[1]", [1], Complex(2, 3) ]
     },
     Regexp => {
-      valid:   [ /[a-z]+/, //, //i, Regexp.new('.*') ],
-      invalid: [ nil, '', 123, '123', Time.now, '.*' ]
+      valid:   [ /[a-z]+/, //, //i, Regexp.new(".*") ],
+      invalid: [ nil, "", 123, "123", Time.now, ".*" ]
     },
     String => {
-      valid:   [ '', 'Hello World', '12345' ],
+      valid:   [ "", "Hello World", "12345" ],
       invalid: [ nil, 12345, Time.now ]
     },
     Symbol => {
-      valid:   [ :foo, :'', 'bar'.to_sym ],
-      invalid: [ nil, '', 1.1, '123', Time.now, '[1]', '2013-03-04' ]
+      valid:   [ :foo, :'', "bar".to_sym ],
+      invalid: [ nil, "", 1.1, "123", Time.now, "[1]", "2013-03-04" ]
     },
     Time => {
       valid:   [ Time.now ],
-      invalid: [ nil, '', 123, '123', "#{Time.now}" ]
+      invalid: [ nil, "", 123, "123", "#{Time.now}" ]
     }
   }.each do |type, data|
     describe type do

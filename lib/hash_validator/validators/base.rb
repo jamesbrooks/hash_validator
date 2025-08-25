@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HashValidator::Validator::Base
   attr_accessor :name
 
@@ -6,7 +8,7 @@ class HashValidator::Validator::Base
     self.name = name.to_s
 
     unless self.name.size > 0
-      raise StandardError.new('Validator must be initialized with a valid name (length greater than zero)')
+      raise StandardError.new("Validator must be initialized with a valid name (length greater than zero)")
     end
   end
 
@@ -30,16 +32,16 @@ class HashValidator::Validator::Base
       else
         raise StandardError.new("valid? method must accept either 1 argument (value) or 2 arguments (value, validations)")
       end
-      
+
       unless valid_result
         errors[key] = error_message
       end
     else
       # Otherwise, subclass must override validate
-      raise StandardError.new('Validator must implement either valid? or override validate method')
+      raise StandardError.new("Validator must implement either valid? or override validate method")
     end
   end
-  
+
   # Subclasses can optionally implement this for simple boolean validation
   # Return true if valid, false if invalid
   # Either:

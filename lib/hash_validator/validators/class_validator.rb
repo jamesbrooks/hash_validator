@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class HashValidator::Validator::ClassValidator < HashValidator::Validator::Base
   def initialize
-    super('_class')  # The name of the validator, underscored as it won't usually be directly invoked (invoked through use of validator)
+    super("_class")  # The name of the validator, underscored as it won't usually be directly invoked (invoked through use of validator)
   end
 
   def should_validate?(rhs)

@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module HashValidator
   module Validator
     class ManyValidator < Base
       def initialize
-        super('_many')  # The name of the validator, underscored as it won't usually be directly invoked (invoked through use of validator)
+        super("_many")  # The name of the validator, underscored as it won't usually be directly invoked (invoked through use of validator)
       end
 
       def should_validate?(validation)

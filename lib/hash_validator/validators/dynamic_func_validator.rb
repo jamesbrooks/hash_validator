@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 class HashValidator::Validator::DynamicFuncValidator < HashValidator::Validator::Base
   attr_accessor :func, :custom_error_message
 
   def initialize(name, func, error_message = nil)
     super(name)
-    
+
     unless func.respond_to?(:call)
       raise ArgumentError, "Function must be callable (proc or lambda)"
     end
-    
+
     @func = func
     @custom_error_message = error_message
   end
@@ -17,10 +19,8 @@ class HashValidator::Validator::DynamicFuncValidator < HashValidator::Validator:
   end
 
   def valid?(value)
-    begin
-      !!@func.call(value)
-    rescue => e
-      false
-    end
+    !!@func.call(value)
+  rescue
+    false
   end
 end

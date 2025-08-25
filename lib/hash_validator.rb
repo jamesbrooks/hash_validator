@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module HashValidator
   def self.validate(*args)
     Base.validate(*args)
@@ -16,8 +18,8 @@ module HashValidator
   end
 end
 
-require 'hash_validator/base'
-require 'hash_validator/version'
-require 'hash_validator/validators'
-require 'hash_validator/validations'
-require 'hash_validator/configuration'
+require "hash_validator/base"
+require "hash_validator/version"
+require "hash_validator/validators"
+require "hash_validator/validations"
+require "hash_validator/configuration"

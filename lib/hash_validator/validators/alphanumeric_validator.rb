@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class HashValidator::Validator::AlphanumericValidator < HashValidator::Validator::Base
   def initialize
-    super('alphanumeric')  # The name of the validator
+    super("alphanumeric")  # The name of the validator
   end
 
   def error_message
-    'must contain only letters and numbers'
+    "must contain only letters and numbers"
   end
 
   def valid?(value)

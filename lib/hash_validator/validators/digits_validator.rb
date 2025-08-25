@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class HashValidator::Validator::DigitsValidator < HashValidator::Validator::Base
   def initialize
-    super('digits')  # The name of the validator
+    super("digits")  # The name of the validator
   end
 
   def error_message
-    'must contain only digits'
+    "must contain only digits"
   end
 
   def valid?(value)

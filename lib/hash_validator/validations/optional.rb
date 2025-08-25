@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module HashValidator::Validations
   class Optional
     attr_reader :validation

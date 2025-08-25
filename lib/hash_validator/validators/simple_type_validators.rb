@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 [
   Array,
   Complex,
@@ -12,6 +14,6 @@
   Symbol,
   Time
 ].each do |type|
-  name = type.to_s.gsub(/(.)([A-Z])/,'\1_\2').downcase  # ActiveSupport/Inflector#underscore behaviour
+  name = type.to_s.gsub(/(.)([A-Z])/, '\1_\2').downcase  # ActiveSupport/Inflector#underscore behaviour
   HashValidator.add_validator(HashValidator::Validator::SimpleValidator.new(name, lambda { |v| v.is_a?(type) }))
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HashValidator::Validator::SimpleValidator < HashValidator::Validator::Base
   attr_accessor :lambda
 

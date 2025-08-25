@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class HashValidator::Validator::EmailValidator < HashValidator::Validator::Base
   def initialize
-    super('email')  # The name of the validator
+    super("email")  # The name of the validator
   end
 
   def error_message
-    'is not a valid email'
+    "is not a valid email"
   end
 
   def valid?(value)

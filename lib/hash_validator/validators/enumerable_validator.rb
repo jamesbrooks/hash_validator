@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class HashValidator::Validator::EnumerableValidator < HashValidator::Validator::Base
   def initialize
-    super('_enumerable')  # The name of the validator, underscored as it won't usually be directly invoked (invoked through use of validator)
+    super("_enumerable")  # The name of the validator, underscored as it won't usually be directly invoked (invoked through use of validator)
   end
 
   def should_validate?(rhs)
@@ -8,7 +10,7 @@ class HashValidator::Validator::EnumerableValidator < HashValidator::Validator::
   end
 
   def error_message
-    'value from list required'
+    "value from list required"
   end
 
   def valid?(value, validations)

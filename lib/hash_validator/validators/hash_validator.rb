@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class HashValidator::Validator::HashValidator < HashValidator::Validator::Base
   def initialize
-    super('hash')
+    super("hash")
   end
 
   def should_validate?(rhs)
@@ -28,12 +30,12 @@ class HashValidator::Validator::HashValidator < HashValidator::Validator::Base
 
     if HashValidator::Base.strict?
       value.keys.each do |k|
-        errors[k] = 'key not expected' unless validations[k]
+        errors[k] = "key not expected" unless validations[k]
       end
     end
 
     # Cleanup errors (remove any empty nested errors)
-    errors.delete_if { |_,v| v.empty? }
+    errors.delete_if { |_, v| v.empty? }
   end
 end
 

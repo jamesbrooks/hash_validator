@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module HashValidator
   module Validator
     class MultipleValidator < Base
       def initialize
-        super('_multiple')  # The name of the validator, underscored as it won't usually be directly invoked (invoked through use of validator)
+        super("_multiple")  # The name of the validator, underscored as it won't usually be directly invoked (invoked through use of validator)
       end
 
       def should_validate?(validation)
@@ -18,7 +20,7 @@ module HashValidator
           multiple_errors << validation_error[key] if validation_error[key]
         end
 
-        errors[key] = multiple_errors.join(', ') if multiple_errors.any?
+        errors[key] = multiple_errors.join(", ") if multiple_errors.any?
       end
     end
   end

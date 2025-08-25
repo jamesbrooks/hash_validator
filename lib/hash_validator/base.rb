@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HashValidator::Base
   attr_accessor :hash, :validations, :errors
 

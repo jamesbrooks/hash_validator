@@ -1,12 +1,14 @@
-require 'json'
+# frozen_string_literal: true
+
+require "json"
 
 class HashValidator::Validator::JsonValidator < HashValidator::Validator::Base
   def initialize
-    super('json')  # The name of the validator
+    super("json")  # The name of the validator
   end
 
   def error_message
-    'is not valid JSON'
+    "is not valid JSON"
   end
 
   def valid?(value)

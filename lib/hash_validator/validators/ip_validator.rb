@@ -1,12 +1,14 @@
-require 'ipaddr'
+# frozen_string_literal: true
+
+require "ipaddr"
 
 class HashValidator::Validator::IpValidator < HashValidator::Validator::Base
   def initialize
-    super('ip')  # The name of the validator
+    super("ip")  # The name of the validator
   end
 
   def error_message
-    'is not a valid IP address'
+    "is not a valid IP address"
   end
 
   def valid?(value)

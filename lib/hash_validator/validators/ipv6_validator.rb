@@ -1,12 +1,14 @@
-require 'ipaddr'
+# frozen_string_literal: true
+
+require "ipaddr"
 
 class HashValidator::Validator::Ipv6Validator < HashValidator::Validator::Base
   def initialize
-    super('ipv6')  # The name of the validator
+    super("ipv6")  # The name of the validator
   end
 
   def error_message
-    'is not a valid IPv6 address'
+    "is not a valid IPv6 address"
   end
 
   def valid?(value)

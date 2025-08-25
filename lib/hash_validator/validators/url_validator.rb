@@ -1,12 +1,14 @@
-require 'uri'
+# frozen_string_literal: true
+
+require "uri"
 
 class HashValidator::Validator::UrlValidator < HashValidator::Validator::Base
   def initialize
-    super('url')  # The name of the validator
+    super("url")  # The name of the validator
   end
 
   def error_message
-    'is not a valid URL'
+    "is not a valid URL"
   end
 
   def valid?(value)

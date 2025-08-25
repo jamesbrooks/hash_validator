@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class HashValidator::Validator::PresenceValidator < HashValidator::Validator::Base
   def initialize
-    super('required')
+    super("required")
   end
 
   def error_message
-    'is required'
+    "is required"
   end
 
   def valid?(value)
